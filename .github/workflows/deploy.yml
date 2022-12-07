@@ -87,21 +87,3 @@ jobs:
     #               RESOURCE: nais/prod-gcp/nais.yaml
     #               IMAGE: ${{ needs.set-vars.outputs.image }}
     #               DRY_RUN: false
-
-    release:
-        if: github.ref == 'refs/heads/main'
-        name: Tag and release
-        needs: [set-vars, deploy-prod]
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v3
-
-            - name: Create release
-              uses: actions/create-release@v1
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              with:
-                  tag_name: release/prod@${{ needs.set-vars.outputs.tag }}
-                  release_name: Release ${{ needs.set-vars.outputs.tag }} to prod
-                  prerelease: false
