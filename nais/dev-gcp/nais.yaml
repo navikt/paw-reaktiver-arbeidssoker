@@ -21,6 +21,8 @@ spec:
         requests:
             cpu: 500m
             memory: 580Mi
+    kafka:
+      pool: nav-dev
     accessPolicy:
         outbound:
             rules:
