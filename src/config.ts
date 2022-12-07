@@ -1,4 +1,5 @@
 export interface IEnvironmentVariables {
+    APP_NAME: string;
     KAFKA_TOPIC: string;
     KAFKA_BROKERS: string;
     KAFKA_CERTIFICATE: string;

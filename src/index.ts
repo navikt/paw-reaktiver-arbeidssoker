@@ -2,7 +2,7 @@ import { Kafka } from 'kafkajs';
 import config from './config';
 
 const kafka = new Kafka({
-    clientId: 'paw-reaktiver-arbeidssoker',
+    clientId: config.APP_NAME,
     brokers: [config.KAFKA_BROKERS],
     ssl: {
         rejectUnauthorized: false,
@@ -12,7 +12,7 @@ const kafka = new Kafka({
     },
 });
 
-const consumer = kafka.consumer({ groupId: 'test-group-v1' });
+const consumer = kafka.consumer({ groupId: `${config.APP_NAME}-group-v1` });
 
 (async () => {
     await consumer.connect();
