@@ -21,7 +21,8 @@ const consumer = kafka.consumer({ groupId: `${config.APP_NAME}-group-v1` });
     await consumer.run({
         eachMessage: async ({ message }) => {
             if (message.value) {
-                console.log(JSON.parse(message.value?.toString()));
+                const messageValue = JSON.parse(message.value?.toString().replace(/\\n/g, ''));
+                console.log(messageValue);
             }
         },
     });
