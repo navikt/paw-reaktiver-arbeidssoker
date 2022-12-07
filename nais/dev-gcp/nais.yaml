@@ -12,7 +12,8 @@ spec:
         min: 1
         max: 1
     env:
-        - KAFKA_TOPIC: testplayground
+        - name: KAFKA_TOPIC
+          value: testplayground
     resources:
         limits:
             cpu: '3'
