@@ -6,6 +6,9 @@ metadata:
     labels:
         team: paw
 spec:
+    azure:
+        application:
+            enabled: true
     image: {{ image }}
     port: 3000
     replicas:
@@ -29,3 +32,6 @@ spec:
         outbound:
             rules:
                 - application: aia-backend
+                - application: veilarbregistrering
+                - application: dp-innsyn
+                  namespace: teamdagpenger
