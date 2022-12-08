@@ -1,7 +1,7 @@
 import { Kafka } from 'kafkajs';
 import config from './config';
 
-const sslConfig = () => {
+const genererSSLConfig = () => {
     if (!config.KAFKA_CA) {
         return false;
     }
@@ -16,7 +16,7 @@ const sslConfig = () => {
 const kafka = new Kafka({
     clientId: config.APP_NAME,
     brokers: [config.KAFKA_BROKERS],
-    ssl: sslConfig(),
+    ssl: genererSSLConfig(),
 });
 
 const consumer = kafka.consumer({ groupId: `${config.APP_NAME}-group-v1` });
