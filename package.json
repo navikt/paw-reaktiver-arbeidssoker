@@ -8,6 +8,8 @@
         "start": "ts-node-dev src/index.ts | pino-pretty",
         "dev": "ts-node-dev -r dotenv/config src/index.ts | pino-pretty",
         "start:kafka": "ts-node-dev test-kafka.ts",
+        "kafka:produce": "./kafka-utils/produce_kafka.sh",
+        "kafka:consume": "./kafka-utils/consume_kafka.sh",
         "test:ci": "npm run lint",
         "lint": "eslint --ext .ts src/**",
         "prettier": "prettier --write 'src/**/*.ts'",
