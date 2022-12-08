@@ -3,15 +3,15 @@ import config from './config';
 
 const sslConfig = () => {
     if (!config.KAFKA_CA) {
-        return false
+        return false;
     }
-    return  {
+    return {
         rejectUnauthorized: false,
         ca: [config.KAFKA_CA],
         key: config.KAFKA_PRIVATE_KEY,
         cert: config.KAFKA_CERTIFICATE,
-    }
-}
+    };
+};
 
 const kafka = new Kafka({
     clientId: config.APP_NAME,
@@ -28,8 +28,13 @@ const consumer = kafka.consumer({ groupId: `${config.APP_NAME}-group-v1` });
     await consumer.run({
         eachMessage: async ({ message }) => {
             if (message.value) {
-                const messageValue = JSON.parse(message.value?.toString().replace(/\\n/g, ''));
-                console.log(messageValue);
+                try {
+                    const messageValue = JSON.parse(message.value?.toString());
+                    console.log(messageValue);
+                } catch (error) {
+                    console.log('Feil ved lesing av kafka melding: ${message}');
+                    console.error(error);
+                }
             }
         },
     });
