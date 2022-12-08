@@ -18,6 +18,11 @@ F.eks. `nvm install 18.12.1 && nvm use 18.12.1`
 
 ## Kafka-utils
 
+For å teste å produsere og konsumere meldinger er det laget to scripts som du kan kjøre i hvert sitt terminalvindu
+
+- starte produsent `./kafka-utils/produce_kafka.sh`
+- starte konsument `./kafka-utils/consume_kafka.sh`
+
 ## Deploye kun til dev
 
 Ved å prefikse branch-navn med `dev/`, så vil branchen kun deployes i dev.
