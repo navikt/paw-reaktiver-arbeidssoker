@@ -32,7 +32,7 @@ const consumer = kafka.consumer({ groupId: `${config.APP_NAME}-group-v1` });
                     const messageValue = JSON.parse(message.value?.toString());
                     console.log(messageValue);
                 } catch (error) {
-                    console.log('Feil ved lesing av kafka melding: ${message}');
+                    console.log(`Feil ved lesing av kafka melding: ${message}`);
                     console.error(error);
                 }
             }
