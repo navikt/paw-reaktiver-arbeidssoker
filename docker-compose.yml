@@ -17,6 +17,7 @@ services:
             - ALLOW_PLAINTEXT_LISTENER=yes
             - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
             - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=true
+            - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://127.0.0.1:9092
     server:
         build: .
         depends_on:
