@@ -1,6 +1,3 @@
-import dotenv from 'dotenv';
-dotenv.config();
-
 import { Kafka } from 'kafkajs';
 import config from './config';
 

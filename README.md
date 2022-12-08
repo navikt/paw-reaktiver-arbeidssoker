@@ -11,8 +11,8 @@ F.eks. `nvm install 18.12.1 && nvm use 18.12.1`
 
 - klon repo
 - installer avhengigheter: `npm i`
-- start kafka: `docker-compose up -d`
 - sett miljøvariabler i `.env`: `cp .env-example .env`
+- start kafka: `docker-compose up -d`
 - start utviklingsserver: `npm run dev`
 - stopp kafka: `docker-compose stop && docker-compose rm -f`
 
