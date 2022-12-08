@@ -9,14 +9,14 @@ Bruk Node.js 18.
 Du kan bruke [NVM](https://github.com/nvm-sh/nvm) for å sette versjon.
 F.eks. `nvm install 18.12.1 && nvm use 18.12.1`
 
--   klon repo
--   installer avhengigheter `npm i`
--   start kafka: `docker-compose up -d`
--   start utviklingsserver `npm start`
+- klon repo
+- installer avhengigheter: `npm i`
+- start kafka: `docker-compose up -d`
+- sett miljøvariabler i `.env`: `cp .env-example .env`
+- start utviklingsserver: `npm start`
+- stopp kafka: `docker-compose stop && docker-compose rm -f`
 
-## Stoppe kafka
-
-`docker-compose stop && docker-compose rm -f`
+## Kafka-utils
 
 ## Deploye kun til dev
 

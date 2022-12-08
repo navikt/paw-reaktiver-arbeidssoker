@@ -17,4 +17,5 @@ npm-debug.log*
 
 
 .idea/
+.vscode
 *.iml
