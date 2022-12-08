@@ -6,6 +6,7 @@
     "scripts": {
         "build": "tsc",
         "start": "ts-node-dev src/index.ts | pino-pretty",
+        "dev": "ts-node-dev src/index.ts | pino-pretty",
         "start:kafka": "ts-node-dev test-kafka.ts",
         "test:ci": "npm run lint",
         "lint": "eslint --ext .ts src/**",
@@ -18,11 +19,11 @@
         "kafkajs": "2.2.3",
         "pino": "8.7.0",
         "pino-http": "8.2.1",
-        "prom-client": "14.1.0"
+        "prom-client": "14.1.0",
+        "dotenv": "16.0.3"
     },
     "devDependencies": {
         "@types/node": "18.11.9",
-        "dotenv": "16.0.3",
         "@typescript-eslint/eslint-plugin": "5.45.0",
         "@typescript-eslint/parser": "5.45.0",
         "eslint": "8.28.0",
