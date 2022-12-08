@@ -32,3 +32,6 @@ spec:
         outbound:
             rules:
                 - application: aia-backend
+                - application: veilarbregistrering
+                - application: dp-innsyn
+                  namespace: teamdagpenger
