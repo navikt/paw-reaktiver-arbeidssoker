@@ -1,5 +1,7 @@
 import { Kafka } from 'kafkajs';
+
 import config from './config';
+import logger from './logger';
 
 const genererSSLConfig = () => {
     if (!config.KAFKA_CA) {
@@ -28,12 +30,14 @@ const consumer = kafka.consumer({ groupId: `${config.APP_NAME}-group-v1` });
     await consumer.run({
         eachMessage: async ({ message }) => {
             if (message.value) {
+                const { value, headers } = message;
                 try {
-                    const messageValue = JSON.parse(message.value?.toString());
-                    console.log(messageValue);
+                    const messageJSON = JSON.parse(value.toString());
+                    logger.info(messageJSON);
+                    logger.info(headers);
                 } catch (error) {
-                    console.log(`Feil ved lesing av kafka melding: ${message}`);
-                    console.error(error);
+                    logger.error(`Feil ved lesing av kafka melding: ${message}`);
+                    logger.error(error);
                 }
             }
         },
