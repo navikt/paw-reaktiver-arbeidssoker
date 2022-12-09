@@ -9,7 +9,7 @@ spec:
     azure:
         application:
             enabled: true
-    image: {{ image }}
+    image: { { image } }
     port: 3000
     replicas:
         min: 1
@@ -19,6 +19,8 @@ spec:
           value: paw-reaktiver-arbeidssoker
         - name: KAFKA_TOPIC
           value: paw.testplayground
+        - name: AIA_BACKEND_SCOPE
+          value: api://dev-gcp.paw.aia-backend/.default
     resources:
         limits:
             cpu: '3'

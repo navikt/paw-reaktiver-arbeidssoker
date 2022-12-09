@@ -8,6 +8,10 @@ export interface IEnvironmentVariables {
     AIA_BACKEND_URL: string;
     VEILARBREGISTRERING_URL: string;
     VEILARBREGISTRERING_GCP_URL: string;
+    AIA_BACKEND_SCOPE: string;
+    AZURE_OPENID_CONFIG_TOKEN_ENDPOINT: string;
+    AZURE_APP_CLIENT_ID: string;
+    AZURE_APP_CLIENT_SECRET: string;
 }
 
 const env = process.env as unknown as IEnvironmentVariables;

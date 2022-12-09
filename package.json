@@ -20,8 +20,7 @@
         "openid-client": "5.3.1",
         "pino": "8.7.0",
         "pino-http": "8.2.1",
-        "prom-client": "14.1.0",
-        "zod": "3.19.1"
+        "prom-client": "14.1.0"
     },
     "devDependencies": {
         "@types/node": "18.11.12",
