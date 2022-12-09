@@ -9,6 +9,7 @@ async function getAzureAdToken(scope: string): Promise<TokenSet | undefined> {
         const response = await fetch(config.AZURE_OPENID_CONFIG_TOKEN_ENDPOINT, {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
+                Accept: 'application/json',
             },
             method: 'POST',
             body: new URLSearchParams({
