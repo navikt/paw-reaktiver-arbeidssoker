@@ -10,8 +10,10 @@ export interface Periode {
     tilOgMedDato?: string | null;
 }
 
+export type ArbeidssokerPeriode = [] | Periode[];
+
 interface Props {
-    arbeidssokerperioder: [] | Periode[];
+    arbeidssokerperioder: ArbeidssokerPeriode;
 }
 
 function sorterArbeidssokerperioderSisteForst(a: Periode, b: Periode) {

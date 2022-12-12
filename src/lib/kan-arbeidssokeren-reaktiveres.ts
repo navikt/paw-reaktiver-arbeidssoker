@@ -6,10 +6,10 @@ interface Props {
 
 function kanArbeidssokerenReaktiveres(props: Props): boolean {
     const { arbeidssokerperioder } = props;
-    const beregnedeArbeidssokerPerioder = beregnArbeidssokerperioder({ arbeidssokerperioder: arbeidssokerperioder });
-    const erInaktivert = beregnedeArbeidssokerPerioder.harAktivArbeidssokerperiode === 'Nei';
+    const beregnedeArbeidssokerPerioder = beregnArbeidssokerperioder({ arbeidssokerperioder });
+    const harIkkeAktivPeriode = beregnedeArbeidssokerPerioder.harAktivArbeidssokerperiode === 'Nei';
     const erInnenfor28dager = beregnedeArbeidssokerPerioder.antallDagerSidenSisteArbeidssokerperiode < 28;
-    return erInaktivert && erInnenfor28dager;
+    return harIkkeAktivPeriode && erInnenfor28dager;
 }
 
 export { kanArbeidssokerenReaktiveres };
