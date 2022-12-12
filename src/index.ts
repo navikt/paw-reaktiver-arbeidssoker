@@ -2,6 +2,9 @@ import { Kafka } from 'kafkajs';
 
 import config from './config';
 import logger from './logger';
+import { skalMeldingBehandles } from './lib/skal-melding-behandles';
+
+import { Melding } from './types/melding';
 
 const genererSSLConfig = () => {
     if (!config.KAFKA_CA) {
@@ -30,11 +33,15 @@ const consumer = kafka.consumer({ groupId: `${config.APP_NAME}-group-v1` });
     await consumer.run({
         eachMessage: async ({ message }) => {
             if (message.value) {
-                const { value, headers } = message;
+                const { value } = message;
                 try {
-                    const messageJSON = JSON.parse(value.toString());
-                    logger.info(messageJSON);
-                    logger.info(headers);
+                    const messageJSON = JSON.parse(value.toString()) as Melding;
+                    const skalBehandles = skalMeldingBehandles(messageJSON);
+                    if (skalBehandles) {
+                        logger.info('Behandler meldingen');
+                    } else {
+                        logger.info('Meldingen skal ikke behandles');
+                    }
                 } catch (error) {
                     logger.error(`Feil ved lesing av kafka melding: ${message}`);
                     logger.error(error);
