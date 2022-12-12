@@ -7,7 +7,7 @@ import { plussDager } from './plussdager';
 import { Melding } from '../types/melding';
 
 describe('tester skalMeldingBehandles', () => {
-    it('returnerer false dersom arbeidssøkeren har svart NEI på spørsmål 5', () => {
+    it('returnerer FALSE dersom arbeidssøkeren har svart NEI på spørsmål 5', () => {
         const melding = {
             fnr: '12345678910',
             arbeidssokerNestePeriode: false,
@@ -23,7 +23,7 @@ describe('tester skalMeldingBehandles', () => {
         assert.equal(resultat, forventetResultat);
     });
 
-    it('returnerer false dersom arbeidssøkeren har svart JA på spørsmål 5 og periodeTil + 14 dager er i fortiden', () => {
+    it('returnerer FALSE dersom arbeidssøkeren har svart JA på spørsmål 5 og periodeTil + 14 dager er i FORTIDEN', () => {
         const melding = {
             fnr: '12345678910',
             arbeidssokerNestePeriode: true,
@@ -39,7 +39,7 @@ describe('tester skalMeldingBehandles', () => {
         assert.equal(resultat, forventetResultat);
     });
 
-    it('returnerer true dersom arbeidssøkeren har svart JA på spørsmål 5 og periodeTil + 14 dager er i fremtiden', () => {
+    it('returnerer TRUE dersom arbeidssøkeren har svart JA på spørsmål 5 og periodeTil + 14 dager er i FREMTIDEN', () => {
         const iDag = new Date();
         const iDagStreng = iDag.toISOString().substring(0, 10);
         const periodeFra = plussDager(iDag, -7).toISOString().substring(0, 10);
