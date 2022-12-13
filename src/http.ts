@@ -1,5 +1,7 @@
 import { randomUUID } from 'node:crypto';
 
+import logger from './logger';
+
 function generateHeaders(token: string) {
     return {
         'Content-Type': 'application/json',
@@ -9,13 +11,19 @@ function generateHeaders(token: string) {
 }
 
 export async function fetchData(url: string, token: string, data?: string) {
+    const headers = generateHeaders(token);
+
+    logger.info(`Starter kall mot ${url} med callId ${headers['nav-call-id']}`);
+
     const response = await fetch(url, {
         method: data ? 'POST' : 'GET',
-        headers: generateHeaders(token),
+        headers,
         body: data,
+        credentials: 'include',
     });
 
     if (response.ok) {
+        logger.info(`Kall mot ${url} med callId ${headers['nav-call-id']} - suksess`);
         const content = await response.json();
         return content;
     }
