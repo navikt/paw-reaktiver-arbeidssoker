@@ -1,5 +1,22 @@
 import { randomUUID } from 'node:crypto';
 
-const uid = randomUUID();
+function generateHeaders(token: string) {
+    return {
+        'Content-Type': 'application/json',
+        Authentication: `Bearer ${token}`,
+        'nav-call-id': randomUUID(),
+    };
+}
 
-console.log(uid);
+export async function fetchData(url: string, token: string, data?: string) {
+    const response = await fetch(url, {
+        method: data ? 'POST' : 'GET',
+        headers: generateHeaders(token),
+        body: data,
+    });
+
+    if (response.ok) {
+        const content = await response.json();
+        return content;
+    }
+}
