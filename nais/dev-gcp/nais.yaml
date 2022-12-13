@@ -21,6 +21,8 @@ spec:
           value: paw.testplayground
         - name: AIA_BACKEND_SCOPE
           value: api://dev-gcp.paw.aia-backend/.default
+        - name: VEILARBREGISTRERING_SCOPE
+          value: api://dev-gcp.paw.veilarbregistrering/.default
     resources:
         limits:
             cpu: '3'
