@@ -24,6 +24,20 @@ For å teste å produsere og konsumere meldinger er det laget to scripts som du 
 -   starte produsent `./kafka-utils/produce_kafka.sh`
 -   starte konsument `./kafka-utils/consume_kafka.sh`
 
+## Mock
+
+Mock serveren gir ulike resultater etter hvilket fødselsnummer du tester med
+
+`01020304050` - ingen arbeidssøkerperioder
+`50607080901` - aktiv arbeidssøkerperiode
+`12345678901` - avsluttet arbeidssøkerperiode
+
+```
+curl -X POST http://localhost:3000/api/arbeidssoker/perioder\
+-H 'Content-Type: application/json'\
+-d '{"fnr":"50607080901"}'
+```
+
 ## Deploye kun til dev
 
 Ved å prefikse branch-navn med `dev/`, så vil branchen kun deployes i dev.
