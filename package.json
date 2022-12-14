@@ -10,6 +10,7 @@
         "test": "npm run lint && TEST_EXTENSIONS=.test.ts ts-node-test src/",
         "test:ci": "npm run lint && TEST_EXTENSIONS=.test.ts ts-node-test src/",
         "lint": "eslint --ext .ts src/**",
+        "mock": "ts-node-dev mock/server.ts",
         "prettier": "prettier --write 'src/**/*.ts'",
         "refresh": "rm -rf node_modules && rm package-lock.json && npm i",
         "prepare": "husky install"

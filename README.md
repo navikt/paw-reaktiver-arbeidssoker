@@ -9,19 +9,20 @@ Bruk Node.js 18.
 Du kan bruke [NVM](https://github.com/nvm-sh/nvm) for å sette versjon.
 F.eks. `nvm install 18.12.1 && nvm use 18.12.1`
 
-- klon repo
-- installer avhengigheter: `npm i`
-- sett miljøvariabler i `.env`: `cp .env-example .env`
-- start kafka: `docker-compose up -d`
-- start utviklingsserver: `npm run dev`
-- stopp kafka: `docker-compose stop && docker-compose rm -f`
+-   klon repo
+-   installer avhengigheter: `npm i`
+-   sett miljøvariabler i `.env`: `cp .env-example .env`
+-   start kafka: `docker-compose up -d`
+-   start mock server: `npm run mock`
+-   start utviklingsserver: `npm run dev`
+-   stopp kafka: `docker-compose stop && docker-compose rm -f`
 
 ## Kafka-utils
 
 For å teste å produsere og konsumere meldinger er det laget to scripts som du kan kjøre i hvert sitt terminalvindu
 
-- starte produsent `./kafka-utils/produce_kafka.sh`
-- starte konsument `./kafka-utils/consume_kafka.sh`
+-   starte produsent `./kafka-utils/produce_kafka.sh`
+-   starte konsument `./kafka-utils/consume_kafka.sh`
 
 ## Deploye kun til dev
 
