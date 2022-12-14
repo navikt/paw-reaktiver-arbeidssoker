@@ -24,6 +24,14 @@ For å teste å produsere og konsumere meldinger er det laget to scripts som du 
 -   starte produsent `./kafka-utils/produce_kafka.sh`
 -   starte konsument `./kafka-utils/consume_kafka.sh`
 
+### Eksempel på meldinger
+
+Ved å endre på `fnr`, `periodeFra`, `periodeTil` og `opprettet` skal du kunne få testet de fleste varianter lokalt
+
+```
+{"fnr": "01020304050", "kontrollMeldekortRef": 2599531, "arbeidssokerNestePeriode": true, "periodeFra": "2022-10-24", "periodeTil": "2022-11-06" "kortType": "MANUELL_ARENA", "opprettet": "2022-11-09T12:30:52.107"}
+```
+
 ## Mock
 
 Mock serveren gir ulike resultater etter hvilket fødselsnummer du tester med
