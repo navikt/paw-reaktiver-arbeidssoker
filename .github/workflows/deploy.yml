@@ -70,20 +70,20 @@ jobs:
                   IMAGE: ${{ needs.set-vars.outputs.image }}
                   RESOURCE: nais/dev-gcp/nais.yaml
 
-    # deploy-prod:
-    #     if: github.ref == 'refs/heads/main'
-    #     name: Deploy til prod
-    #     needs: [set-vars, deploy-dev]
-    #     runs-on: ubuntu-latest
-    #     steps:
-    #         - name: Checkout
-    #           uses: actions/checkout@v3
+    deploy-prod:
+        if: github.ref == 'refs/heads/main'
+        name: Deploy til prod
+        needs: [set-vars, deploy-dev]
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
 
-    #         - name: Deploy
-    #           uses: nais/deploy/actions/deploy@v1
-    #           env:
-    #               APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-    #               CLUSTER: prod-gcp
-    #               RESOURCE: nais/prod-gcp/nais.yaml
-    #               IMAGE: ${{ needs.set-vars.outputs.image }}
-    #               DRY_RUN: false
+            - name: Deploy
+              uses: nais/deploy/actions/deploy@v1
+              env:
+                  APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+                  CLUSTER: prod-gcp
+                  RESOURCE: nais/prod-gcp/nais.yaml
+                  IMAGE: ${{ needs.set-vars.outputs.image }}
+                  DRY_RUN: true
