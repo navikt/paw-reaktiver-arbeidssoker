@@ -27,4 +27,5 @@ export async function fetchData(url: string, token: string, data?: string) {
         const content = await response.json();
         return content;
     }
+    logger.error(`Kall mot ${url} feilet med ${response.status}`);
 }
