@@ -4,7 +4,7 @@ import { getVeilarbregistreringToken } from '../auth';
 
 const hentArbeidssokerperioder = async (fnr: string) => {
     return fetchData(
-        `${config.VEILARBREGISTRERING_URL}/api/arbeidssoker/perioder?fraOgMed=2020-01-01`,
+        `${config.VEILARBREGISTRERING_GCP_URL}/api/arbeidssoker/perioder?fraOgMed=2020-01-01`,
         await getVeilarbregistreringToken(),
         JSON.stringify({ fnr })
     );

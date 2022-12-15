@@ -21,10 +21,14 @@ spec:
           value: paw.testplayground
         - name: AIA_BACKEND_SCOPE
           value: api://dev-gcp.paw.aia-backend/.default
-        - name: VEILARBREGISTRERING_SCOPE
-          value: api://dev-fss.paw.veilarbregistrering/.default
+        - name: VEILARBREGISTRERING_GCP_SCOPE
+          value: api://dev-gcp.paw.veilarbregistrering/.default
+        - name: PAW_PROXY_SCOPE
+          value: api://dev-fss.paw.paw-proxy/.default
         - name: VEILARBREGISTRERING_URL
           value: https://paw-proxy.dev-fss-pub.nais.io/veilarbregistrering
+        - name: VEILARBREGISTRERING_GCP_URL
+          value: https://veilarbregistrering.dev.intern.nav.no/veilarbregistrering
     resources:
         limits:
             cpu: '3'
