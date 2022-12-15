@@ -5,7 +5,7 @@ import logger from './logger';
 function generateHeaders(token: string) {
     return {
         'Content-Type': 'application/json',
-        Authentication: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
         'nav-call-id': randomUUID(),
     };
 }
