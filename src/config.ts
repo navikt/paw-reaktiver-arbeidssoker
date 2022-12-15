@@ -13,6 +13,8 @@ export interface IEnvironmentVariables {
     AZURE_OPENID_CONFIG_TOKEN_ENDPOINT: string;
     AZURE_APP_CLIENT_ID: string;
     AZURE_APP_CLIENT_SECRET: string;
+    UNLEASH_API_URL: string;
+    UNLEASH_ENVIRONMENT: string;
 }
 
 const env = process.env as unknown as IEnvironmentVariables;
