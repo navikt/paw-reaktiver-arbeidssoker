@@ -29,6 +29,8 @@ spec:
           value: https://paw-proxy.dev-fss-pub.nais.io/veilarbregistrering
         - name: VEILARBREGISTRERING_GCP_URL
           value: https://veilarbregistrering.dev.intern.nav.no/veilarbregistrering
+        - name: AIA_BACKEND_URL
+          value: http://aia-backend
     resources:
         limits:
             cpu: '3'
