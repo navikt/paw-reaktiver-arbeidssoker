@@ -36,4 +36,9 @@ const getAiaBackendToken = async () => {
     return token?.access_token;
 };
 
-export { getAiaBackendToken };
+const getVeilarbregistreringToken = async () => {
+    const token = await getAzureAdToken(config.VEILARBREGISTRERING_SCOPE);
+    return token?.access_token;
+};
+
+export { getAiaBackendToken, getVeilarbregistreringToken };
