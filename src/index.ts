@@ -6,6 +6,10 @@ import logger from './logger';
 import { skalMeldingBehandles } from './lib/skal-melding-behandles';
 
 import { Melding } from './types/melding';
+import hentArbeidssokerperioder from './lib/hent-arbeidssokerperioder';
+import { kanArbeidssokerenReaktiveres } from './lib/kan-arbeidssokeren-reaktiveres';
+import reaktiverBruker from './lib/reaktiver-bruker';
+import lagreReaktiveringForBruker from './lib/lagre-reaktivering-for-bruker';
 
 const genererSSLConfig = () => {
     if (!config.KAFKA_CA) {
@@ -40,16 +44,15 @@ const consumer = kafka.consumer({ groupId: `${config.APP_NAME}-group-v1` });
                     const skalBehandles = skalMeldingBehandles(messageJSON);
                     if (skalBehandles) {
                         logger.info(`Behandler meldingen med offset - ${offset}`);
-                        /**
-                         * - Sjekker om arbeidssøkeren ikke har aktiv arbeidssøkerperiode
-                         *      - henter arbeidssøkerperioder og kjører resultatet gjennom kan-arbeidsøkeren-reaktiveres
-                         * - Hvis ikke reaktivering er aktuelt: Avbryt
-                         * - Hvis reaktivering er aktuelt:
-                         *      - reaktiver arbeidssøker
-                         *      - hvis reaktivering feiler: avbryt
-                         *      - hvis reaktivering suksess
-                         *          - post melding om reaktivering til AiA-backend
-                         */
+                        const fnr = messageJSON.fnr;
+                        try {
+                            if (kanArbeidssokerenReaktiveres(await hentArbeidssokerperioder(fnr))) {
+                                await reaktiverBruker(fnr);
+                                await lagreReaktiveringForBruker(fnr);
+                            }
+                        } catch (err) {
+                            logger.error(`Feil ved reaktivering av bruker: ${err}`);
+                        }
                     } else {
                         logger.info(`Meldingen med offset - ${offset} - skal ikke behandles`);
                     }
