@@ -24,7 +24,7 @@ spec:
         - name: VEILARBREGISTRERING_SCOPE
           value: api://dev-fss.paw.veilarbregistrering/.default
         - name: VEILARBREGISTRERING_URL
-	      value: https://paw-proxy.dev-fss-pub.nais.io/veilarbregistrering
+          value: https://paw-proxy.dev-fss-pub.nais.io/veilarbregistrering
     resources:
         limits:
             cpu: '3'
