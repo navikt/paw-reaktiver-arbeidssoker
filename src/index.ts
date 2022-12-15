@@ -29,7 +29,7 @@ const consumer = kafka.consumer({ groupId: `${config.APP_NAME}-group-v1` });
 
 (async () => {
     await consumer.connect();
-    await consumer.subscribe({ topic: config.KAFKA_TOPIC, fromBeginning: true });
+    await consumer.subscribe({ topic: config.KAFKA_TOPIC, fromBeginning: false });
 
     await consumer.run({
         eachMessage: async ({ message }) => {
