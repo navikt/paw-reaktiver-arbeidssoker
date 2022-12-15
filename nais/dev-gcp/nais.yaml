@@ -9,7 +9,7 @@ spec:
     azure:
         application:
             enabled: true
-    image: {{image}}
+    image: {{ image }}
     port: 3000
     replicas:
         min: 1
@@ -22,7 +22,9 @@ spec:
         - name: AIA_BACKEND_SCOPE
           value: api://dev-gcp.paw.aia-backend/.default
         - name: VEILARBREGISTRERING_SCOPE
-          value: api://dev-gcp.paw.veilarbregistrering/.default
+          value: api://dev-fss.paw.veilarbregistrering/.default
+	- name: VEILARBREGISTRERING_URL
+	  value: https://paw-proxy.dev-fss-pub.nais.io/veilarbregistrering
     resources:
         limits:
             cpu: '3'
@@ -39,3 +41,5 @@ spec:
                 - application: veilarbregistrering
                 - application: dp-innsyn
                   namespace: teamdagpenger
+                - application: paw-proxy
+                  cluster: dev-fss
