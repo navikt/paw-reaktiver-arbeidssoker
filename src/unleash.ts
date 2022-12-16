@@ -8,12 +8,21 @@ class ByEnvironmentStrategy extends Strategy {
     }
 }
 
-initialize({
+const unleash = initialize({
     appName: 'paw-reaktiver-arbeidssoker',
     url: config.UNLEASH_API_URL,
     environment: config.UNLEASH_ENVIRONMENT,
     strategies: [new ByEnvironmentStrategy('byEnvironment')],
 });
+
+const toggleIsChanged = (cb: (enabled: boolean) => void, name: FeatureToggles) => {
+    unleash.on('changed', (changes: any[]) => {
+        const toggle = changes.find((ch) => ch.name === name);
+        if (toggle) {
+            cb(toggle.enabled);
+        }
+    });
+};
 
 enum FeatureToggles {
     HENT_NESTE_FRA_KO = 'paw-reaktiver-arbeidssoker.hent-neste-fra-ko',
@@ -27,4 +36,4 @@ const toggleIsEnabled = (toggle: FeatureToggles) => {
     return isEnabled(toggle);
 };
 
-export { FeatureToggles, toggleIsEnabled };
+export { FeatureToggles, toggleIsEnabled, toggleIsChanged };

@@ -73,5 +73,13 @@ async function runConsumer() {
         await runConsumer();
     }
 
+    // toggleIsChanged((enabled: boolean) => {
+    //     if (enabled) {
+    //         runConsumer()
+    //     } else {
+    //         stopConsumer();
+    //     }
+    // })
+
     logger.info(`Feature toggle ${FeatureToggles.HENT_NESTE_FRA_KO} er IKKE aktivert. Henter IKKE nye meldekort`);
 })();
