@@ -2,9 +2,8 @@
 
 import config from '../config';
 import logger from '../logger';
-import { TokenSet } from 'openid-client';
 
-async function getAzureAdToken(scope: string): Promise<TokenSet> {
+export default async function getAzureAdToken(scope: string): Promise<string> {
     try {
         const response = await fetch(config.AZURE_OPENID_CONFIG_TOKEN_ENDPOINT, {
             headers: {
@@ -24,19 +23,10 @@ async function getAzureAdToken(scope: string): Promise<TokenSet> {
             throw response;
         }
 
-        return await response.json();
+        const token = await response.json();
+        return token.access_token;
     } catch (err) {
-        logger.error(`Feil ved henting av azure ad token for scope:${scope}: ${err}`);
+        logger.error(`Feil ved henting av azure ad token for scope: ${scope}: ${err}`);
         throw err;
     }
 }
-
-const getAiaBackendToken = async () => {
-    return (await getAzureAdToken(config.AIA_BACKEND_SCOPE)).access_token!;
-};
-
-const getVeilarbregistreringToken = async () => {
-    return (await getAzureAdToken(config.VEILARBREGISTRERING_GCP_SCOPE)).access_token!;
-};
-
-export { getAiaBackendToken, getVeilarbregistreringToken };
