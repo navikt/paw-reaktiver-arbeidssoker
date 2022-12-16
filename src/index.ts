@@ -73,7 +73,7 @@ async function runConsumer() {
         await runConsumer();
     }
 
-    // toggleIsChanged((enabled: boolean) => {
+    // onToggleIsChanged((enabled: boolean) => {
     //     if (enabled) {
     //         runConsumer()
     //     } else {

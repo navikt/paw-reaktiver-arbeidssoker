@@ -15,7 +15,7 @@ const unleash = initialize({
     strategies: [new ByEnvironmentStrategy('byEnvironment')],
 });
 
-const toggleIsChanged = (cb: (enabled: boolean) => void, name: FeatureToggles) => {
+const onToggleIsChanged = (cb: (enabled: boolean) => void, name: FeatureToggles) => {
     unleash.on('changed', (changes: any[]) => {
         const toggle = changes.find((ch) => ch.name === name);
         if (toggle) {
@@ -36,4 +36,4 @@ const toggleIsEnabled = (toggle: FeatureToggles) => {
     return isEnabled(toggle);
 };
 
-export { FeatureToggles, toggleIsEnabled, toggleIsChanged };
+export { FeatureToggles, toggleIsEnabled, onToggleIsChanged };
