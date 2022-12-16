@@ -40,7 +40,7 @@ async function runConsumer() {
 
     await consumer.run({
         eachMessage: async ({ message }) => {
-            if (!hentNesteFraKo) return;
+            if (!hentNesteFraKo()) return;
             if (message.value) {
                 const { value, offset } = message;
                 try {
@@ -69,7 +69,7 @@ async function runConsumer() {
 }
 
 (async () => {
-    while (hentNesteFraKo) {
+    while (hentNesteFraKo()) {
         logger.info(`Feature toggle ${FeatureToggles.HENT_NESTE_FRA_KO} er aktivert. Henter nye meldekort`);
         await runConsumer();
     }
