@@ -69,7 +69,7 @@ async function runConsumer() {
 }
 
 (async () => {
-    while (hentNesteFraKo()) {
+    if (hentNesteFraKo()) {
         logger.info(`Feature toggle ${FeatureToggles.HENT_NESTE_FRA_KO} er aktivert. Henter nye meldekort`);
         await runConsumer();
     }
