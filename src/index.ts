@@ -72,4 +72,6 @@ async function runConsumer() {
         logger.info(`Feature toggle ${FeatureToggles.HENT_NESTE_FRA_KO} er aktivert. Henter nye meldekort`);
         await runConsumer();
     }
+
+    logger.info(`Feature toggle ${FeatureToggles.HENT_NESTE_FRA_KO} er IKKE aktivert. Henter IKKE nye meldekort`);
 })();
