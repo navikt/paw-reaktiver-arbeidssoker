@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import { skalMeldingBehandles } from './skal-melding-behandles';
 import { plussDager } from './plussdager';
 
-import { Melding } from '../types/melding';
+import { MeldekortMelding } from '../types/meldekort-melding';
 
 describe('tester skalMeldingBehandles', () => {
     it('returnerer FALSE dersom arbeidssøkeren har svart NEI på spørsmål 5', () => {
@@ -15,7 +15,7 @@ describe('tester skalMeldingBehandles', () => {
             periodeTil: '2022-12-11',
             kortType: 'ELEKTRONISK',
             opprettet: '2022-12-12',
-        } as Melding;
+        } as MeldekortMelding;
 
         const resultat = skalMeldingBehandles(melding);
         const forventetResultat = false;
@@ -31,7 +31,7 @@ describe('tester skalMeldingBehandles', () => {
             periodeTil: '2021-12-11',
             kortType: 'ELEKTRONISK',
             opprettet: '2021-12-12',
-        } as Melding;
+        } as MeldekortMelding;
 
         const resultat = skalMeldingBehandles(melding);
         const forventetResultat = false;
@@ -50,7 +50,7 @@ describe('tester skalMeldingBehandles', () => {
             periodeTil: iDagStreng,
             kortType: 'ELEKTRONISK',
             opprettet: iDagStreng,
-        } as Melding;
+        } as MeldekortMelding;
 
         const resultat = skalMeldingBehandles(melding);
         const forventetResultat = true;

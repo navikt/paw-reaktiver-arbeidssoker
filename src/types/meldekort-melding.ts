@@ -1,4 +1,4 @@
-export type Melding = {
+export type MeldekortMelding = {
     fnr: string;
     arbeidssokerNestePeriode: boolean;
     periodeFra: string;

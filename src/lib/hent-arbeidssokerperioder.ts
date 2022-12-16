@@ -1,11 +1,11 @@
-import { fetchData } from '../http';
+import fetchData from '../fetch-data';
 import config from '../config';
-import { getVeilarbregistreringToken } from '../auth';
+import getAzureAdToken from '../auth';
 
 const hentArbeidssokerperioder = async (fnr: string) => {
     return fetchData(
         `${config.VEILARBREGISTRERING_GCP_URL}/api/arbeidssoker/perioder?fraOgMed=2020-01-01`,
-        await getVeilarbregistreringToken(),
+        await getAzureAdToken(config.VEILARBREGISTRERING_GCP_SCOPE),
         JSON.stringify({ fnr })
     );
 };

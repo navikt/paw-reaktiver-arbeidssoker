@@ -1,11 +1,11 @@
-import { fetchData } from '../http';
+import fetchData from '../fetch-data';
 import config from '../config';
-import { getAiaBackendToken } from '../auth';
+import getAzureAdToken from '../auth';
 
 const lagreReaktiveringForBruker = async (fnr: string) => {
     return fetchData(
         `${config.AIA_BACKEND_URL}/azure/automatisk-reaktivering`,
-        await getAiaBackendToken(),
+        await getAzureAdToken(config.AIA_BACKEND_SCOPE),
         JSON.stringify({ fnr })
     );
 };
