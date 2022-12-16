@@ -33,6 +33,8 @@ spec:
           value: http://aia-backend
         - name: UNLEASH_API_URL
           value: https://unleash.nais.io/api/
+        - name: UNLEASH_ENVIRONMENT
+          value: prod
     resources:
         limits:
             cpu: '3'

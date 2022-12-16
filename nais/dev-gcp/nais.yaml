@@ -31,6 +31,10 @@ spec:
           value: https://veilarbregistrering.dev.intern.nav.no/veilarbregistrering
         - name: AIA_BACKEND_URL
           value: http://aia-backend
+        - name: UNLEASH_API_URL
+          value: https://unleash.nais.io/api/
+        - name: UNLEASH_ENVIRONMENT
+          value: dev
     resources:
         limits:
             cpu: '3'
