@@ -10,7 +10,7 @@ function generateHeaders(token: string) {
     };
 }
 
-export async function fetchData(url: string, token: string, data?: string) {
+export default async function fetchData(url: string, token: string, data?: string) {
     const headers = generateHeaders(token);
 
     logger.info(`Starter kall mot ${url} med callId ${headers['nav-call-id']}`);
@@ -28,4 +28,5 @@ export async function fetchData(url: string, token: string, data?: string) {
         return content;
     }
     logger.error(`Kall mot ${url} feilet med ${response.status}`);
+    logger.error(await response.text());
 }
