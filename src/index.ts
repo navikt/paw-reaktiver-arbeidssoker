@@ -5,11 +5,12 @@ import logger from './logger';
 
 import { skalMeldingBehandles } from './lib/skal-melding-behandles';
 
-import { Melding } from './types/melding';
+import { MeldekortMelding } from './types/meldekort-melding';
 import hentArbeidssokerperioder from './lib/hent-arbeidssokerperioder';
 import { kanArbeidssokerenReaktiveres } from './lib/kan-arbeidssokeren-reaktiveres';
 import reaktiverBruker from './lib/reaktiver-bruker';
 import lagreReaktiveringForBruker from './lib/lagre-reaktivering-for-bruker';
+import { FeatureToggles, toggleIsEnabled } from './unleash';
 
 const genererSSLConfig = () => {
     if (!config.KAFKA_CA) {
@@ -31,16 +32,19 @@ const kafka = new Kafka({
 
 const consumer = kafka.consumer({ groupId: `${config.APP_NAME}-group-v1` });
 
-(async () => {
+const hentNesteFraKo = () => toggleIsEnabled(FeatureToggles.HENT_NESTE_FRA_KO);
+
+async function runConsumer() {
     await consumer.connect();
     await consumer.subscribe({ topic: config.KAFKA_TOPIC, fromBeginning: false });
 
     await consumer.run({
         eachMessage: async ({ message }) => {
+            if (!hentNesteFraKo) return;
             if (message.value) {
                 const { value, offset } = message;
                 try {
-                    const messageJSON = JSON.parse(value.toString()) as Melding;
+                    const messageJSON = JSON.parse(value.toString()) as MeldekortMelding;
                     const skalBehandles = skalMeldingBehandles(messageJSON);
                     if (skalBehandles) {
                         logger.info(`Behandler meldingen med offset - ${offset}`);
@@ -62,4 +66,11 @@ const consumer = kafka.consumer({ groupId: `${config.APP_NAME}-group-v1` });
             }
         },
     });
+}
+
+(async () => {
+    while (hentNesteFraKo) {
+        logger.info(`Feature toggle ${FeatureToggles.HENT_NESTE_FRA_KO} er aktivert. Henter nye meldekort`);
+        await runConsumer();
+    }
 })();
