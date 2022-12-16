@@ -40,7 +40,6 @@ async function runConsumer() {
 
     await consumer.run({
         eachMessage: async ({ message }) => {
-            if (!hentNesteFraKo()) return;
             if (message.value) {
                 const { value, offset } = message;
                 try {
