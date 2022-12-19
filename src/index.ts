@@ -46,13 +46,16 @@ async function runConsumer() {
                         logger.info(`Behandler meldingen med offset - ${offset}`);
                         const fnr = messageJSON.fnr;
                         try {
+                            logger.info(`Henter arbeidssokerperioder for bruker - offset ${offset}`);
                             const { arbeidssokerperioder } = await hentArbeidssokerperioder(fnr);
                             if (arbeidssokerperioder.length === 0) {
                                 logger.info(`Ingen arbeidssokerperioder funnet - offset ${offset}`);
                                 return;
                             }
                             if (kanArbeidssokerenReaktiveres(arbeidssokerperioder)) {
+                                logger.info(`Forsøker å reaktivere bruker - offset ${offset}`);
                                 await reaktiverBruker(fnr);
+                                logger.info(`Forsøker å lagre reaktivering for bruker - offset ${offset}`);
                                 await lagreReaktiveringForBruker(fnr);
                             }
                         } catch (err) {
