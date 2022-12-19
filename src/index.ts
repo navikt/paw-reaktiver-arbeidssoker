@@ -34,6 +34,7 @@ const consumer = kafka.consumer({ groupId: `${config.APP_NAME}-group-v1` });
 
 async function sjekkHentNesteFraKo() {
     while (true) {
+        await new Promise((resolve) => setTimeout(resolve, 10000));
         const hentNesteFraKo = toggleIsEnabled(FeatureToggles.HENT_NESTE_FRA_KO);
         const consumerPaused = consumer.paused().some(({ topic }) => topic === config.KAFKA_TOPIC);
 
@@ -45,7 +46,6 @@ async function sjekkHentNesteFraKo() {
             logger.info(`Feature toggle ${FeatureToggles.HENT_NESTE_FRA_KO} er aktivert, fortsetter consumer`);
             consumer.resume([{ topic: config.KAFKA_TOPIC }]);
         }
-        await new Promise((resolve) => setTimeout(resolve, 2000));
     }
 }
 
