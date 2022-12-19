@@ -46,7 +46,12 @@ async function runConsumer() {
                         logger.info(`Behandler meldingen med offset - ${offset}`);
                         const fnr = messageJSON.fnr;
                         try {
-                            if (kanArbeidssokerenReaktiveres(await hentArbeidssokerperioder(fnr))) {
+                            const { arbeidssokerperioder } = await hentArbeidssokerperioder(fnr);
+                            if (arbeidssokerperioder.length === 0) {
+                                logger.info(`Ingen arbeidssokerperioder funnet - offset ${offset}`);
+                                return;
+                            }
+                            if (kanArbeidssokerenReaktiveres(arbeidssokerperioder)) {
                                 await reaktiverBruker(fnr);
                                 await lagreReaktiveringForBruker(fnr);
                             }
