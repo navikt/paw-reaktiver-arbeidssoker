@@ -10,6 +10,7 @@ import hentArbeidssokerperioder from './lib/hent-arbeidssokerperioder';
 import { kanArbeidssokerenReaktiveres } from './lib/kan-arbeidssokeren-reaktiveres';
 import reaktiverBruker from './lib/reaktiver-bruker';
 import lagreReaktiveringForBruker from './lib/lagre-reaktivering-for-bruker';
+import { FeatureToggles, toggleIsEnabled, unleashInit } from './unleash';
 
 const genererSSLConfig = () => {
     if (!config.KAFKA_CA) {
@@ -30,6 +31,23 @@ const kafka = new Kafka({
 });
 
 const consumer = kafka.consumer({ groupId: `${config.APP_NAME}-group-v1` });
+
+async function sjekkHentNesteFraKo() {
+    while (true) {
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        const hentNesteFraKo = toggleIsEnabled(FeatureToggles.HENT_NESTE_FRA_KO);
+        const consumerPaused = consumer.paused().some(({ topic }) => topic === config.KAFKA_TOPIC);
+
+        if (!hentNesteFraKo && !consumerPaused) {
+            logger.info(`Feature toggle ${FeatureToggles.HENT_NESTE_FRA_KO} er deaktivert, pauser consumer`);
+            consumer.pause([{ topic: config.KAFKA_TOPIC }]);
+        }
+        if (hentNesteFraKo && consumerPaused) {
+            logger.info(`Feature toggle ${FeatureToggles.HENT_NESTE_FRA_KO} er aktivert, fortsetter consumer`);
+            consumer.resume([{ topic: config.KAFKA_TOPIC }]);
+        }
+    }
+}
 
 async function runConsumer() {
     await consumer.connect();
@@ -73,13 +91,7 @@ async function runConsumer() {
 }
 
 (async () => {
-    await runConsumer();
-
-    // onToggleIsChanged((enabled: boolean) => {
-    //     if (enabled) {
-    //         runConsumer()
-    //     } else {
-    //         stopConsumer();
-    //     }
-    // })
+    await unleashInit();
+    sjekkHentNesteFraKo();
+    runConsumer();
 })();

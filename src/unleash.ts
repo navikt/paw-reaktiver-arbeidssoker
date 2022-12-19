@@ -1,4 +1,4 @@
-import { Context, initialize, isEnabled, Strategy } from 'unleash-client';
+import { Context, isEnabled, startUnleash, Strategy } from 'unleash-client';
 import config from './config';
 
 class ByEnvironmentStrategy extends Strategy {
@@ -8,21 +8,13 @@ class ByEnvironmentStrategy extends Strategy {
     }
 }
 
-const unleash = initialize({
-    appName: 'paw-reaktiver-arbeidssoker',
-    url: config.UNLEASH_API_URL,
-    environment: config.UNLEASH_ENVIRONMENT,
-    strategies: [new ByEnvironmentStrategy('byEnvironment')],
-});
-
-const onToggleIsChanged = (cb: (enabled: boolean) => void, name: FeatureToggles) => {
-    unleash.on('changed', (changes: any[]) => {
-        const toggle = changes.find((ch) => ch.name === name);
-        if (toggle) {
-            cb(toggle.enabled);
-        }
+const unleashInit = () =>
+    startUnleash({
+        appName: 'paw-reaktiver-arbeidssoker',
+        url: config.UNLEASH_API_URL,
+        environment: config.UNLEASH_ENVIRONMENT,
+        strategies: [new ByEnvironmentStrategy('byEnvironment')],
     });
-};
 
 enum FeatureToggles {
     HENT_NESTE_FRA_KO = 'paw-reaktiver-arbeidssoker.hent-neste-fra-ko',
@@ -36,4 +28,4 @@ const toggleIsEnabled = (toggle: FeatureToggles) => {
     return isEnabled(toggle);
 };
 
-export { FeatureToggles, toggleIsEnabled, onToggleIsChanged };
+export { FeatureToggles, toggleIsEnabled, unleashInit };
