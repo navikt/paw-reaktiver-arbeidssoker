@@ -10,7 +10,6 @@ import hentArbeidssokerperioder from './lib/hent-arbeidssokerperioder';
 import { kanArbeidssokerenReaktiveres } from './lib/kan-arbeidssokeren-reaktiveres';
 import reaktiverBruker from './lib/reaktiver-bruker';
 import lagreReaktiveringForBruker from './lib/lagre-reaktivering-for-bruker';
-import { FeatureToggles, toggleIsEnabled } from './unleash';
 
 const genererSSLConfig = () => {
     if (!config.KAFKA_CA) {
@@ -31,8 +30,6 @@ const kafka = new Kafka({
 });
 
 const consumer = kafka.consumer({ groupId: `${config.APP_NAME}-group-v1` });
-
-const hentNesteFraKo = () => toggleIsEnabled(FeatureToggles.HENT_NESTE_FRA_KO);
 
 async function runConsumer() {
     await consumer.connect();
@@ -68,10 +65,7 @@ async function runConsumer() {
 }
 
 (async () => {
-    if (hentNesteFraKo()) {
-        logger.info(`Feature toggle ${FeatureToggles.HENT_NESTE_FRA_KO} er aktivert. Henter nye meldekort`);
-        await runConsumer();
-    }
+    await runConsumer();
 
     // onToggleIsChanged((enabled: boolean) => {
     //     if (enabled) {
@@ -80,6 +74,4 @@ async function runConsumer() {
     //         stopConsumer();
     //     }
     // })
-
-    logger.info(`Feature toggle ${FeatureToggles.HENT_NESTE_FRA_KO} er IKKE aktivert. Henter IKKE nye meldekort`);
 })();
