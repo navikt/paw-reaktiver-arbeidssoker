@@ -25,8 +25,8 @@ export default async function getAzureAdToken(scope: string): Promise<string> {
 
         const token = await response.json();
         return token.access_token;
-    } catch (err) {
-        logger.error(`Feil ved henting av azure ad token for scope: ${scope}: ${err}`);
-        throw err;
+    } catch (error) {
+        logger.error(error, `Feil ved henting av azure ad token for scope: ${scope}`);
+        throw error;
     }
 }

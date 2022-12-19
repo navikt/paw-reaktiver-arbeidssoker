@@ -24,6 +24,7 @@ export default async function fetchData(url: string, token: string, data?: strin
 
     if (response.ok) {
         logger.info(`Kall mot ${url} med callId ${headers['nav-call-id']} - suksess`);
+        if (response.status === 204) return;
         const content = await response.json();
         return content;
     }

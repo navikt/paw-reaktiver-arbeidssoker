@@ -29,9 +29,9 @@ http.createServer((req, res) => {
     req.on('data', (chunk: any) => {
         body.push(chunk);
     }).on('end', () => {
-        const data = JSON.parse(Buffer.concat(body).toString());
-        const { fnr } = data;
-        if (req.url === '/api/arbeidssoker/perioder') {
+        if (req.url?.includes('/api/arbeidssoker/perioder')) {
+            const data = JSON.parse(Buffer.concat(body).toString());
+            const { fnr } = data;
             const response = arbeidssokerperioderMockData[fnr];
             res.writeHead(200, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify(response));
