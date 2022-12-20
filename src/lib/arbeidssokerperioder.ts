@@ -11,12 +11,19 @@ export interface Periode {
 }
 
 function sorterArbeidssokerperioderSisteForst(a: Periode, b: Periode) {
-    return new Date(b.fraOgMedDato).getTime() - new Date(a.fraOgMedDato).getTime();
+    const delta = new Date(b.fraOgMedDato).getTime() - new Date(a.fraOgMedDato).getTime();
+    if (delta === 0) {
+        if (b.tilOgMedDato === null) {
+            return 1;
+        } else if (a.tilOgMedDato === null) {
+            return -1;
+        }
+    }
+    return delta;
 }
 
 function harAktivArbeidssokerperiode(perioder: Periode[]) {
-    const sistePeriode = perioder[0];
-    return sistePeriode.tilOgMedDato === null || sistePeriode.tilOgMedDato === undefined;
+    return perioder.some((periode) => periode.tilOgMedDato === null);
 }
 
 function beregnAntallDagerSidenSisteArbeidssokerperiode(dato: string | null) {
