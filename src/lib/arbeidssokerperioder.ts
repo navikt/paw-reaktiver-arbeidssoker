@@ -1,19 +1,13 @@
 import dagerFraDato from './dager-fra-dato';
 
 export interface BeregnedePerioder {
-    harAktivArbeidssokerperiode: 'INGEN_DATA' | 'N/A' | 'Ja' | 'Nei';
-    antallDagerSidenSisteArbeidssokerperiode: number | 'Ikke avsluttet' | 'INGEN_DATA' | 'N/A';
+    harAktivArbeidssokerperiode: 'Ja' | 'Nei';
+    antallDagerSidenSisteArbeidssokerperiode: number | 'Ikke avsluttet';
 }
 
 export interface Periode {
     fraOgMedDato: string;
     tilOgMedDato?: string | null;
-}
-
-export type ArbeidssokerPeriode = [] | Periode[];
-
-interface Props {
-    arbeidssokerperioder: ArbeidssokerPeriode;
 }
 
 function sorterArbeidssokerperioderSisteForst(a: Periode, b: Periode) {
@@ -29,23 +23,7 @@ function beregnAntallDagerSidenSisteArbeidssokerperiode(dato: string | null) {
     return dagerFraDato(dato ? new Date(dato) : new Date());
 }
 
-function beregnArbeidssokerperioder(props: Props | null | undefined): BeregnedePerioder {
-    const { arbeidssokerperioder } = props ? props : { arbeidssokerperioder: null };
-
-    if (arbeidssokerperioder === null) {
-        return {
-            harAktivArbeidssokerperiode: 'INGEN_DATA',
-            antallDagerSidenSisteArbeidssokerperiode: 'INGEN_DATA',
-        };
-    }
-
-    if (arbeidssokerperioder.length === 0) {
-        return {
-            harAktivArbeidssokerperiode: 'N/A',
-            antallDagerSidenSisteArbeidssokerperiode: 'N/A',
-        };
-    }
-
+function beregnArbeidssokerperioder(arbeidssokerperioder: Periode[]): BeregnedePerioder {
     arbeidssokerperioder.sort(sorterArbeidssokerperioderSisteForst);
 
     const aktivArbeidssokerperiode = harAktivArbeidssokerperiode(arbeidssokerperioder);
