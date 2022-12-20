@@ -29,6 +29,6 @@ export default async function fetchData(url: string, token: string, data?: strin
     }
     logger.error({ callId, message: `Kall mot ${url} feilet med ${response.status}` });
     const errorText = await response.text();
-    logger.error({ callId, message: errorText });
+    if (errorText) logger.error({ callId, message: errorText });
     throw new Error(`Kall mot ${url} feilet med ${response.status}`);
 }
