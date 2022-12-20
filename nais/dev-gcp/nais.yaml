@@ -18,7 +18,7 @@ spec:
         - name: APP_NAME
           value: paw-reaktiver-arbeidssoker
         - name: KAFKA_TOPIC
-          value: paw.testplayground
+          value: meldekort.aapen-meldeplikt-meldekortgodkjentalle-v1-q1
         - name: AIA_BACKEND_SCOPE
           value: api://dev-gcp.paw.aia-backend/.default
         - name: VEILARBREGISTRERING_GCP_SCOPE
