@@ -1,10 +1,11 @@
 import beregnArbeidssokerperioder, { Periode } from './arbeidssokerperioder';
 
 function kanArbeidssokerenReaktiveres(arbeidssokerperioder: Periode[]): boolean {
-    const beregnedeArbeidssokerPerioder = beregnArbeidssokerperioder(arbeidssokerperioder);
-    const harIkkeAktivPeriode = beregnedeArbeidssokerPerioder.harAktivArbeidssokerperiode === 'Nei';
-    const erInnenfor28dager = beregnedeArbeidssokerPerioder.antallDagerSidenSisteArbeidssokerperiode < 28;
-    return harIkkeAktivPeriode && erInnenfor28dager;
+    const { harAktivArbeidssokerperiode, antallDagerSidenSisteArbeidssokerperiode } =
+        beregnArbeidssokerperioder(arbeidssokerperioder);
+    const erInnenfor28dager = antallDagerSidenSisteArbeidssokerperiode < 28;
+
+    return !harAktivArbeidssokerperiode && erInnenfor28dager;
 }
 
 export default kanArbeidssokerenReaktiveres;
