@@ -1,11 +1,20 @@
 import pino from 'pino';
-import ecsFormat from '@elastic/ecs-pino-format';
 
-const logger = pino({
-    ...ecsFormat({ apmIntegration: false }),
+export default pino({
     formatters: {
         level: (label: string) => ({ level: label }),
-    },
-});
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        log: (object: any) => {
+            object['x_callId'] = object.callId;
+            if (object.err) {
+                const err = object.err instanceof Error ? pino.stdSerializers.err(object.err) : object.err;
+                object.stack_trace = err.stack;
+                object.type = err.type;
+                delete object.err;
+            }
 
-export default logger;
+            return object;
+        },
+    },
+    messageKey: 'message',
+});

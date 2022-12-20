@@ -1,4 +1,4 @@
-export function dagerFraDato(fra: Date, til?: Date): number {
+export default function dagerFraDato(fra: Date, til?: Date): number {
     const todate = til || new Date();
     const start = new Date(fra.toISOString().substring(0, 10));
     const end = new Date(todate.toISOString().substring(0, 10));

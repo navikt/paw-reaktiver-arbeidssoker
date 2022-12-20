@@ -1,15 +1,10 @@
-import { beregnArbeidssokerperioder, Periode } from './arbeidssokerperioder';
+import beregnArbeidssokerperioder, { Periode } from './arbeidssokerperioder';
 
-interface Props {
-    arbeidssokerperioder: [] | Periode[];
-}
-
-function kanArbeidssokerenReaktiveres(props: Props): boolean {
-    const { arbeidssokerperioder } = props;
+function kanArbeidssokerenReaktiveres(arbeidssokerperioder: Periode[]): boolean {
     const beregnedeArbeidssokerPerioder = beregnArbeidssokerperioder({ arbeidssokerperioder });
     const harIkkeAktivPeriode = beregnedeArbeidssokerPerioder.harAktivArbeidssokerperiode === 'Nei';
     const erInnenfor28dager = beregnedeArbeidssokerPerioder.antallDagerSidenSisteArbeidssokerperiode < 28;
     return harIkkeAktivPeriode && erInnenfor28dager;
 }
 
-export { kanArbeidssokerenReaktiveres };
+export default kanArbeidssokerenReaktiveres;

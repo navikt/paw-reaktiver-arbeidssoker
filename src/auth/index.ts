@@ -1,6 +1,7 @@
 /// <reference lib="dom" />
 
 import config from '../config';
+import { callId } from '../lib/call-id-provider';
 import logger from '../logger';
 
 export default async function getAzureAdToken(scope: string): Promise<string> {
@@ -9,6 +10,7 @@ export default async function getAzureAdToken(scope: string): Promise<string> {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 Accept: 'application/json',
+                'nav-call-id': callId,
             },
             method: 'POST',
             body: new URLSearchParams({
@@ -26,7 +28,8 @@ export default async function getAzureAdToken(scope: string): Promise<string> {
         const token = await response.json();
         return token.access_token;
     } catch (error) {
-        logger.error(error, `Feil ved henting av azure ad token for scope: ${scope}`);
+        const err = error as Error;
+        logger.error({ err, callId }, `Feil ved henting av azure ad token for scope: ${scope}: ${err.message}`);
         throw error;
     }
 }

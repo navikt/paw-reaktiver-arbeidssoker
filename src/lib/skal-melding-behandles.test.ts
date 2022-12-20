@@ -1,8 +1,8 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 
-import { skalMeldingBehandles } from './skal-melding-behandles';
-import { plussDager } from './plussdager';
+import skalMeldingBehandles from './skal-melding-behandles';
+import plussDager from './plussdager';
 
 import { MeldekortMelding } from '../types/meldekort-melding';
 

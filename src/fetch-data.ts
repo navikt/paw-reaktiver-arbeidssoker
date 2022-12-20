@@ -1,19 +1,18 @@
-import { randomUUID } from 'node:crypto';
-
 import logger from './logger';
+import { callId } from './lib/call-id-provider';
 
 function generateHeaders(token: string) {
     return {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
-        'nav-call-id': randomUUID(),
+        'nav-call-id': callId,
     };
 }
 
 export default async function fetchData(url: string, token: string, data?: string) {
     const headers = generateHeaders(token);
 
-    logger.info(`Starter kall mot ${url} med callId ${headers['nav-call-id']}`);
+    logger.info({ callId, message: `Starter kall mot ${url} med callId ${callId}` });
 
     const response = await fetch(url, {
         method: data ? 'POST' : 'GET',
@@ -23,11 +22,12 @@ export default async function fetchData(url: string, token: string, data?: strin
     });
 
     if (response.ok) {
-        logger.info(`Kall mot ${url} med callId ${headers['nav-call-id']} - suksess`);
+        logger.info({ callId, message: `Kall mot ${url} med callId ${callId} - suksess` });
         if (response.status === 204) return;
         const content = await response.json();
         return content;
     }
-    logger.error(`Kall mot ${url} feilet med ${response.status}`);
-    logger.error(await response.text());
+    logger.error({ callId, message: `Kall mot ${url} feilet med ${response.status}` });
+    const errorText = await response.text();
+    logger.error({ callId, message: errorText });
 }

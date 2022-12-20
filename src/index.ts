@@ -1,15 +1,10 @@
 import { Kafka } from 'kafkajs';
 
 import config from './config';
+import behandleMelding from './lib/behandle-melding';
+import { callId, generateCallId } from './lib/call-id-provider';
 import logger from './logger';
-
-import { skalMeldingBehandles } from './lib/skal-melding-behandles';
-
 import { MeldekortMelding } from './types/meldekort-melding';
-import hentArbeidssokerperioder from './lib/hent-arbeidssokerperioder';
-import { kanArbeidssokerenReaktiveres } from './lib/kan-arbeidssokeren-reaktiveres';
-import reaktiverBruker from './lib/reaktiver-bruker';
-import lagreReaktiveringForBruker from './lib/lagre-reaktivering-for-bruker';
 import { FeatureToggles, toggleIsEnabled, unleashInit } from './unleash';
 
 const kafka = new Kafka(config.kafka.config);
@@ -38,51 +33,23 @@ async function runConsumer() {
 
     await consumer.run({
         eachMessage: async ({ message }) => {
-            if (message.value) {
-                const { value, offset } = message;
-
-                let messageJSON;
-                try {
-                    messageJSON = JSON.parse(value.toString()) as MeldekortMelding;
-                } catch (error) {
-                    logger.error(error, `Feil ved lesing av kafka melding`);
-                    return;
-                }
-
-                const skalBehandles = skalMeldingBehandles(messageJSON);
-                if (!skalBehandles) {
-                    logger.info(`Meldingen med offset - ${offset} - skal ikke behandles`);
-                    return;
-                }
-
-                logger.info(`Behandler meldingen med offset - ${offset}`);
-
-                const { fnr } = messageJSON;
-
-                try {
-                    logger.info(`Henter arbeidssokerperioder for bruker - offset ${offset}`);
-                    const { arbeidssokerperioder } = await hentArbeidssokerperioder(fnr);
-                    if (!arbeidssokerperioder || arbeidssokerperioder.length === 0) {
-                        logger.info(`Ingen arbeidssokerperioder funnet - offset ${offset}`);
-                        return;
-                    }
-
-                    logger.info(`${arbeidssokerperioder.length} arbeidssokerperioder funnet - offset ${offset}`);
-
-                    if (!kanArbeidssokerenReaktiveres(arbeidssokerperioder)) {
-                        logger.info(`Bruker kan ikke reaktiveres - offset ${offset}`);
-                        return;
-                    }
-
-                    logger.info(`Forsøker å reaktivere bruker - offset ${offset}`);
-                    await reaktiverBruker(fnr);
-
-                    logger.info(`Forsøker å lagre reaktivering for bruker - offset ${offset}`);
-                    await lagreReaktiveringForBruker(fnr);
-                } catch (error) {
-                    logger.error(error, `Feil ved reaktivering av bruker`);
-                }
+            generateCallId();
+            const { value, offset } = message;
+            if (!value) {
+                logger.error({ callId, message: 'Ingen melding mottatt fra topic' });
+                return;
             }
+
+            let meldekortMelding: MeldekortMelding;
+            try {
+                meldekortMelding = JSON.parse(value.toString());
+            } catch (error) {
+                const err = error as Error;
+                logger.error({ err, callId, message: `Feil ved lesing av kafka melding: ${err.message}` });
+                return;
+            }
+
+            await behandleMelding(meldekortMelding, offset);
         },
     });
 }

@@ -1,5 +1,5 @@
 import { MeldekortMelding } from '../types/meldekort-melding';
-import { plussDager } from './plussdager';
+import plussDager from './plussdager';
 
 function skalMeldingBehandles(melding: MeldekortMelding): boolean {
     const { arbeidssokerNestePeriode: erArbeidssokerNestePeriode, periodeTil } = melding;
@@ -11,4 +11,4 @@ function skalMeldingBehandles(melding: MeldekortMelding): boolean {
     return erArbeidssokerNestePeriode && bekreftetPeriodeErFremItid;
 }
 
-export { skalMeldingBehandles };
+export default skalMeldingBehandles;

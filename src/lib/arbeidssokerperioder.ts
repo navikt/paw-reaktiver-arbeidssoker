@@ -1,4 +1,4 @@
-import { dagerFraDato } from './dager-fra-dato';
+import dagerFraDato from './dager-fra-dato';
 
 export interface BeregnedePerioder {
     harAktivArbeidssokerperiode: 'INGEN_DATA' | 'N/A' | 'Ja' | 'Nei';
@@ -59,4 +59,4 @@ function beregnArbeidssokerperioder(props: Props | null | undefined): BeregnedeP
     };
 }
 
-export { beregnArbeidssokerperioder };
+export default beregnArbeidssokerperioder;

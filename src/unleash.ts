@@ -4,6 +4,7 @@ import config from './config';
 class ByEnvironmentStrategy extends Strategy {
     isEnabled(parameters: { [key: string]: string }, context: Context): boolean {
         const environmentList: string[] = parameters['miljø']?.split(',') || [];
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         return environmentList.includes(context.environment!);
     }
 }
