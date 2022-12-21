@@ -23,6 +23,7 @@ const tokenCache = {};
 export default async function getAzureAdToken(scope: string): Promise<string> {
     const cachedToken = tokenCache[scope];
     if (cachedToken && !isTokenExpired(cachedToken.access_token)) {
+        logger.info({ callId, message: `Bruker for token ${scope} fra cache` });
         return cachedToken.access_token;
     }
 
