@@ -40,7 +40,10 @@ export default async function (meldekortMelding: MeldekortMelding, offset: strin
             return;
         }
 
-        logger.info({ callId, message: `Skulle vært reaktivert ${arbeidssokerperioder} - offset ${offset}` });
+        logger.info({
+            callId,
+            message: `Skulle vært reaktivert ${JSON.stringify(arbeidssokerperioder)} - offset ${offset}`,
+        });
         // logger.info({ callId, message: `Forsøker å reaktivere bruker - offset ${offset}` });
         // await reaktiverBruker(fnr);
 
