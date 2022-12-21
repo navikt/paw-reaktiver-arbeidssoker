@@ -35,6 +35,11 @@ async function runConsumer() {
         eachMessage: async ({ message }) => {
             generateCallId();
             const { value, offset } = message;
+
+            // Midlertidig hopp ut for å komme up2date med offset
+            logger.info(`Melding med offset: ${offset}`);
+            if (!value) return;
+
             if (!value) {
                 logger.error({ callId, message: 'Ingen melding mottatt fra topic' });
                 return;
