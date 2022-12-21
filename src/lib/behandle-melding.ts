@@ -3,8 +3,8 @@ import logger from '../logger';
 import skalMeldingBehandles from './skal-melding-behandles';
 import hentArbeidssokerperioder from './hent-arbeidssokerperioder';
 import kanArbeidssokerenReaktiveres from './kan-arbeidssokeren-reaktiveres';
-import reaktiverBruker from './reaktiver-bruker';
-import lagreReaktiveringForBruker from './lagre-reaktivering-for-bruker';
+// import reaktiverBruker from './reaktiver-bruker';
+// import lagreReaktiveringForBruker from './lagre-reaktivering-for-bruker';
 import { MeldekortMelding } from '../types/meldekort-melding';
 import { callId } from './call-id-provider';
 
@@ -40,11 +40,11 @@ export default async function (meldekortMelding: MeldekortMelding, offset: strin
             return;
         }
 
-        logger.info({ callId, message: `Forsøker å reaktivere bruker - offset ${offset}` });
-        await reaktiverBruker(fnr);
+        // logger.info({ callId, message: `Forsøker å reaktivere bruker - offset ${offset}` });
+        // await reaktiverBruker(fnr);
 
-        logger.info({ callId, message: `Forsøker å lagre reaktivering for bruker - offset ${offset}` });
-        await lagreReaktiveringForBruker(fnr);
+        // logger.info({ callId, message: `Forsøker å lagre reaktivering for bruker - offset ${offset}` });
+        // await lagreReaktiveringForBruker(fnr);
     } catch (error) {
         const err = error as Error;
         logger.error({ err, callId }, `Feil ved reaktivering av bruker: ${err.message}`);
