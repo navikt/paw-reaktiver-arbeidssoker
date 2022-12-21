@@ -49,7 +49,5 @@ spec:
             rules:
                 - application: aia-backend
                 - application: veilarbregistrering
-                - application: dp-innsyn
-                  namespace: teamdagpenger
                 - application: paw-proxy
                   cluster: dev-fss
