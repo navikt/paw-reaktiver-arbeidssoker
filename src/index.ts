@@ -38,7 +38,7 @@ async function runConsumer() {
 
             if (!value) {
                 logger.error({ callId, message: 'Ingen melding mottatt fra topic' });
-                return;
+                throw new Error('Ingen melding fra topic');
             }
 
             let meldekortMelding: MeldekortMelding;
@@ -47,7 +47,7 @@ async function runConsumer() {
             } catch (error) {
                 const err = error as Error;
                 logger.error({ err, callId, message: `Feil ved lesing av kafka melding: ${err.message}` });
-                return;
+                throw error;
             }
 
             await behandleMelding(meldekortMelding, offset);
