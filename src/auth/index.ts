@@ -1,30 +1,17 @@
 /// <reference lib="dom" />
 
+import jwt from 'jsonwebtoken';
+
 import config from '../config';
 import { callId } from '../lib/call-id-provider';
 import logger from '../logger';
-import jwt from 'jsonwebtoken';
 
-export const isTokenExpired = (token: string): boolean => {
-    try {
-        const { exp } = jwt.decode(token) as {
-            exp: number;
-        };
-        const expirationDatetimeInSeconds = exp * 1000;
-
-        return Date.now() >= expirationDatetimeInSeconds;
-    } catch {
-        return true;
-    }
-};
-
-const tokenCache = {};
+const tokenCache = new Map();
 
 export default async function getAzureAdToken(scope: string): Promise<string> {
-    const cachedToken = tokenCache[scope];
-    if (cachedToken && !isTokenExpired(cachedToken.access_token)) {
-        logger.info({ callId, message: `Bruker for token med scope ${scope} fra cache` });
-        return cachedToken.access_token;
+    const cachedToken = tokenCache.get(scope);
+    if (cachedToken && !isTokenExpired(cachedToken)) {
+        return cachedToken;
     }
 
     try {
@@ -47,8 +34,10 @@ export default async function getAzureAdToken(scope: string): Promise<string> {
             throw response;
         }
 
+        logger.info({ callId, message: `Genererer nytt token med scope ${scope}` });
+
         const token = await response.json();
-        tokenCache[scope] = token;
+        tokenCache.set(scope, token.access_token);
         return token.access_token;
     } catch (error) {
         const err = error as Error;
@@ -56,3 +45,16 @@ export default async function getAzureAdToken(scope: string): Promise<string> {
         throw error;
     }
 }
+
+const isTokenExpired = (token: string): boolean => {
+    try {
+        const { exp } = jwt.decode(token) as {
+            exp: number;
+        };
+        const expirationDatetimeInSeconds = exp * 1000;
+
+        return Date.now() >= expirationDatetimeInSeconds;
+    } catch {
+        return true;
+    }
+};
