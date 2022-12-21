@@ -86,4 +86,3 @@ jobs:
                   CLUSTER: prod-gcp
                   RESOURCE: nais/prod-gcp/nais.yaml
                   IMAGE: ${{ needs.set-vars.outputs.image }}
-                  DRY_RUN: true
