@@ -3,8 +3,29 @@
 import config from '../config';
 import { callId } from '../lib/call-id-provider';
 import logger from '../logger';
+import jwt from 'jsonwebtoken';
+
+export const isTokenExpired = (token: string): boolean => {
+    try {
+        const { exp } = jwt.decode(token) as {
+            exp: number;
+        };
+        const expirationDatetimeInSeconds = exp * 1000;
+
+        return Date.now() >= expirationDatetimeInSeconds;
+    } catch {
+        return true;
+    }
+};
+
+const tokenCache = {};
 
 export default async function getAzureAdToken(scope: string): Promise<string> {
+    const cachedToken = tokenCache[scope];
+    if (cachedToken && !isTokenExpired(cachedToken)) {
+        return cachedToken.access_token;
+    }
+
     try {
         const response = await fetch(config.AZURE_OPENID_CONFIG_TOKEN_ENDPOINT, {
             headers: {
@@ -26,6 +47,7 @@ export default async function getAzureAdToken(scope: string): Promise<string> {
         }
 
         const token = await response.json();
+        tokenCache[scope] = token;
         return token.access_token;
     } catch (error) {
         const err = error as Error;

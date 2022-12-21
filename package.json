@@ -16,12 +16,14 @@
         "prepare": "husky install"
     },
     "dependencies": {
+        "jsonwebtoken": "8.5.1",
         "kafkajs": "2.2.3",
         "pino": "8.7.0",
         "pino-http": "8.2.1",
         "unleash-client": "3.16.0"
     },
     "devDependencies": {
+        "@types/jsonwebtoken": "8.5.9",
         "@types/node": "18.11.13",
         "@typescript-eslint/eslint-plugin": "5.46.0",
         "@typescript-eslint/parser": "5.46.0",
