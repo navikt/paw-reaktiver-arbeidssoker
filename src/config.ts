@@ -28,6 +28,7 @@ export default {
         config: {
             clientId: env.APP_NAME,
             brokers: [env.KAFKA_BROKERS],
+            maxInFlightRequests: 3,
             ssl: !env.KAFKA_CA
                 ? false
                 : {
