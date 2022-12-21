@@ -28,7 +28,6 @@ export default {
         config: {
             clientId: env.APP_NAME,
             brokers: [env.KAFKA_BROKERS],
-            maxInFlightRequests: 3,
             ssl: !env.KAFKA_CA
                 ? false
                 : {
@@ -38,6 +37,9 @@ export default {
                       cert: env.KAFKA_CERTIFICATE,
                   },
         } as KafkaConfig,
-        consumer: { groupId: `${env.APP_NAME}-group-v1` } as ConsumerConfig,
+        consumer: {
+            groupId: `${env.APP_NAME}-group-v1`,
+            // maxInFlightRequests: 3,
+        } as ConsumerConfig,
     },
 };
