@@ -9,12 +9,6 @@ import { MeldekortMelding } from '../types/meldekort-melding';
 import { callId } from './call-id-provider';
 
 export default async function (meldekortMelding: MeldekortMelding, offset: string) {
-    // Midlertidig hopp ut for å komme up2date med offset
-    logger.info(`Melding med offset: ${offset}`);
-    if (offset) {
-        return;
-    }
-
     const skalBehandles = skalMeldingBehandles(meldekortMelding);
     if (!skalBehandles) {
         logger.info({ callId, message: `Meldingen med offset - ${offset} - skal ikke behandles` });
@@ -46,6 +40,7 @@ export default async function (meldekortMelding: MeldekortMelding, offset: strin
             return;
         }
 
+        logger.info({ callId, message: `Skulle vært reaktivert ${arbeidssokerperioder} - offset ${offset}` });
         // logger.info({ callId, message: `Forsøker å reaktivere bruker - offset ${offset}` });
         // await reaktiverBruker(fnr);
 
