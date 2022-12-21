@@ -22,7 +22,7 @@ const tokenCache = {};
 
 export default async function getAzureAdToken(scope: string): Promise<string> {
     const cachedToken = tokenCache[scope];
-    if (cachedToken && !isTokenExpired(cachedToken)) {
+    if (cachedToken && !isTokenExpired(cachedToken.access_token)) {
         return cachedToken.access_token;
     }
 
