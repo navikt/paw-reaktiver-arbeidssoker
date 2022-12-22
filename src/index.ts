@@ -32,9 +32,11 @@ async function runConsumer() {
     await consumer.subscribe({ topic: config.KAFKA_TOPIC, fromBeginning: false });
 
     await consumer.run({
-        eachMessage: async ({ message }) => {
+        eachMessage: async ({ message, partition }) => {
             generateCallId();
             const { value, offset } = message;
+
+            const offsetAndPartition = `${offset}-p${partition}`;
 
             if (!value) {
                 logger.error({ callId, message: 'Ingen melding mottatt fra topic' });
@@ -50,7 +52,7 @@ async function runConsumer() {
                 throw error;
             }
 
-            await behandleMelding(meldekortMelding, offset);
+            await behandleMelding(meldekortMelding, offsetAndPartition);
         },
     });
 }
