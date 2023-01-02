@@ -41,6 +41,10 @@ http.createServer((req, res) => {
         } else if (req.url === '/m2m/automatisk-reaktivering') {
             res.writeHead(201);
             res.end();
+        } else if (req.url === '/skal-reaktiveres') {
+            const response = { kanReaktiveres: true };
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify(response));
         } else if (req.url === '/token') {
             const data = {
                 access_token: randomUUID(),
