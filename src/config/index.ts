@@ -16,13 +16,13 @@ export interface IEnvironmentVariables {
     AZURE_APP_CLIENT_SECRET: string;
     UNLEASH_API_URL: string;
     UNLEASH_ENVIRONMENT: string;
-    NODE_ENV: 'prod' | 'development';
+    NODE_ENV: 'production' | 'development';
 }
 
 const env = process.env as unknown as IEnvironmentVariables;
 
 export default {
     ...env,
-    isProd: env.NODE_ENV === 'prod',
+    isProd: env.NODE_ENV === 'production',
     isDev: env.NODE_ENV === 'development',
 };
