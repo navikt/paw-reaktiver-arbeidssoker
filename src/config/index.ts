@@ -1,5 +1,3 @@
-import { ConsumerConfig, KafkaConfig } from 'kafkajs';
-
 export interface IEnvironmentVariables {
     APP_NAME: string;
     KAFKA_TOPIC: string;
@@ -18,28 +16,13 @@ export interface IEnvironmentVariables {
     AZURE_APP_CLIENT_SECRET: string;
     UNLEASH_API_URL: string;
     UNLEASH_ENVIRONMENT: string;
+    NODE_ENV: 'production' | 'development';
 }
 
 const env = process.env as unknown as IEnvironmentVariables;
 
 export default {
     ...env,
-    kafka: {
-        config: {
-            clientId: env.APP_NAME,
-            brokers: [env.KAFKA_BROKERS],
-            ssl: !env.KAFKA_CA
-                ? false
-                : {
-                      rejectUnauthorized: false,
-                      ca: [env.KAFKA_CA],
-                      key: env.KAFKA_PRIVATE_KEY,
-                      cert: env.KAFKA_CERTIFICATE,
-                  },
-        } as KafkaConfig,
-        consumer: {
-            groupId: `${env.APP_NAME}-group-v1`,
-            // maxInFlightRequests: 3,
-        } as ConsumerConfig,
-    },
+    isProd: env.NODE_ENV === 'production',
+    isDev: env.NODE_ENV === 'development',
 };

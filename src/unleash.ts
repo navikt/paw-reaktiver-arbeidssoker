@@ -22,9 +22,7 @@ enum FeatureToggles {
 }
 
 const toggleIsEnabled = (toggle: FeatureToggles) => {
-    if (process.env.NODE_ENV === 'development') {
-        return true;
-    }
+    if (config.isDev) return true;
 
     return isEnabled(toggle);
 };
