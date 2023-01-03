@@ -2,6 +2,51 @@
 
 Reaktiverer arbeidssøkere som har blitt inaktivert, men som svarer at de fortsatt ønsker å være registrert på meldekortet.
 
+# Teknisk flytskjema
+
+```mermaid
+graph TD
+    A["Meldekort melding fra kafka
+    <code>meldekort.aapen-meldeplikt-meldekortgodkjentalle-v1-p</code>
+    "] --> B["{
+    <pre>
+    &quot;fnr&quot;: &quot;08857798121&quot;,
+    &quot;kontrollMeldekortRef&quot;: 2599531,
+    &quot;arbeidssokerNestePeriode&quot;: true,
+    &quot;periodeFra&quot;: &quot;2022-10-24&quot;,
+    &quot;periodeTil&quot;: &quot;2022-11-06&quot;,
+    &quot;kortType&quot;: &quot;MANUELL_ARENA&quot;,
+    &quot;opprettet&quot;: &quot;2022-11-09T12:30:52.107&quot;
+}"]
+B --> D{<code>arbeidssokerNestePeriode</code>}
+D --> |False| AVSLUTT
+D --> |True| F{"<code>periodeTil</code> er mindre enn
+14 dager siden"}
+F --> |False| AVSLUTT
+F --> |True| G{"Kaller <code>/kan-reaktiveres</code>
+i veilarbregistrering.
+
+Denne kaller videre mot <code>/kan-enkelt-reaktiveres</code> i veilarbarena.
+
+Gir <code>true</code> hvis:
+- Siste formidlingsgruppe er 'ISERV'
+- arbeidssøkerperiode som er avsluttet innenfor de siste 28 dager
+"}
+G --> |False| AVSLUTT
+G --> |True| H{"Reaktiverer bruker ved å
+kalle <code>/fullfoerreaktivering</code> i veilarbregistrering.
+Denne kan feile ved f.eks. <code>BRUKER_MANGLER_ARBEIDSTILLATELSE</code>"}
+H --> |Feil| AVSLUTT
+H --> |Suksess| I["Lagrer reaktivering ved å kalle <code>/automatisk-reaktivering</code>
+i aia-backend"]
+
+AVSLUTT["Skal eller kan <b>ikke</b> reaktiveres"]
+
+style B text-align:left
+style AVSLUTT fill:#ff7088
+style I fill:#61e86f
+```
+
 # Utvikling
 
 Bruk Node.js 18.
