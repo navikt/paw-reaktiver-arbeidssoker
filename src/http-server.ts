@@ -10,14 +10,14 @@ export default function () {
         if (req.url?.includes('/isAlive')) {
             if (consumerJoinedGroup) {
                 res.writeHead(200);
-                res.end();
+                res.end('OK');
             } else {
                 res.writeHead(500);
-                res.end();
+                res.end('Kafka disconnected');
             }
         } else if (req.url?.includes('/isReady')) {
             res.writeHead(200);
-            res.end();
+            res.end('OK');
         } else if (req.url?.includes('prometheus')) {
             res.setHeader('Content-type', register.contentType);
             res.end(await register.metrics());
