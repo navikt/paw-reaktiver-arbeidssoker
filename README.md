@@ -6,7 +6,7 @@ Reaktiverer arbeidssøkere som har blitt inaktivert, men som svarer at de fortsa
 
 ```mermaid
 graph TD
-    A["Meldekort melding fra kafka
+    A["Meldekort melding fra kafka<br>
     <code>meldekort.aapen-meldeplikt-meldekortgodkjentalle-v1-p</code>
     "] --> B["{
     <pre>
@@ -20,24 +20,24 @@ graph TD
 }"]
 B --> D{<code>arbeidssokerNestePeriode</code>}
 D --> |False| AVSLUTT
-D --> |True| F{"<code>periodeTil</code> er mindre enn
+D --> |True| F{"<code>periodeTil</code> er mindre enn<br>
 14 dager siden"}
 F --> |False| AVSLUTT
-F --> |True| G{"Kaller <code>/kan-reaktiveres</code>
-i veilarbregistrering.
+F --> |True| G{"Kaller <code>/kan-reaktiveres</code><br>
+i veilarbregistrering.<br><br>
 
-Denne kaller videre mot <code>/kan-enkelt-reaktiveres</code> i veilarbarena.
+Denne kaller videre mot <code>/kan-enkelt-reaktiveres</code> i veilarbarena.<br><br>
 
-Gir <code>true</code> hvis:
-- Siste formidlingsgruppe er 'ISERV'
+Gir <code>true</code> hvis:<br>
+- Siste formidlingsgruppe er 'ISERV'<br>
 - arbeidssøkerperiode som er avsluttet innenfor de siste 28 dager
 "}
 G --> |False| AVSLUTT
-G --> |True| H{"Reaktiverer bruker ved å
-kalle <code>/fullfoerreaktivering</code> i veilarbregistrering.
+G --> |True| H{"Reaktiverer bruker ved å<br>
+kalle <code>/fullfoerreaktivering</code> i veilarbregistrering.<br>
 Denne kan feile ved f.eks. <code>BRUKER_MANGLER_ARBEIDSTILLATELSE</code>"}
 H --> |Feil| AVSLUTT
-H --> |Suksess| I["Lagrer reaktivering ved å kalle <code>/automatisk-reaktivering</code>
+H --> |Suksess| I["Lagrer reaktivering ved å kalle <code>/automatisk-reaktivering</code><br>
 i aia-backend"]
 
 AVSLUTT["Skal eller kan <b>ikke</b> reaktiveres"]
