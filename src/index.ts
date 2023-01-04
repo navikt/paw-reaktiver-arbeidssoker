@@ -6,12 +6,17 @@ import { callId, generateCallId } from './lib/call-id-provider';
 import logger from './logger';
 import { MeldekortMelding } from './types/meldekort-melding';
 import { FeatureToggles, toggleIsEnabled, unleashInit } from './unleash';
+import runHttpServer from './http-server';
 
 const kafka = new Kafka(kafkaConfig);
 const consumer = kafka.consumer(consumerConfig);
 
-let consumerJoinedGroup = false;
+export let consumerJoinedGroup = false;
+
 consumer.on(consumer.events.GROUP_JOIN, () => (consumerJoinedGroup = true));
+consumer.on(consumer.events.CRASH, () => (consumerJoinedGroup = false));
+consumer.on(consumer.events.DISCONNECT, () => (consumerJoinedGroup = false));
+consumer.on(consumer.events.STOP, () => (consumerJoinedGroup = false));
 
 function sjekkHentNesteFraKoToggle() {
     if (!consumerJoinedGroup) return;
@@ -63,4 +68,5 @@ async function runConsumer() {
     await unleashInit();
     setInterval(sjekkHentNesteFraKoToggle, 1000);
     runConsumer();
+    runHttpServer();
 })();
