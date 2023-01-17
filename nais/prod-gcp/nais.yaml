@@ -30,13 +30,9 @@ spec:
           value: meldekort.aapen-meldeplikt-meldekortgodkjentalle-v1-p
         - name: AIA_BACKEND_SCOPE
           value: api://prod-gcp.paw.aia-backend/.default
-        - name: VEILARBREGISTRERING_GCP_SCOPE
+        - name: VEILARBREGISTRERING_SCOPE
           value: api://prod-gcp.paw.veilarbregistrering/.default
-        - name: PAW_PROXY_SCOPE
-          value: api://prod-fss.paw.paw-proxy/.default
         - name: VEILARBREGISTRERING_URL
-          value: https://paw-proxy.prod-fss-pub.nais.io/veilarbregistrering
-        - name: VEILARBREGISTRERING_GCP_URL
           value: http://veilarbregistrering/veilarbregistrering
         - name: AIA_BACKEND_URL
           value: http://aia-backend/aia-backend

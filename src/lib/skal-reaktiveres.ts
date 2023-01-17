@@ -8,8 +8,8 @@ type Response = {
 
 export default async function skalReaktiveres(fnr: string): Promise<Response> {
     return fetchData(
-        `${config.VEILARBREGISTRERING_GCP_URL}/api/kan-reaktiveres`,
-        await getAzureAdToken(config.VEILARBREGISTRERING_GCP_SCOPE),
+        `${config.VEILARBREGISTRERING_URL}/api/kan-reaktiveres`,
+        await getAzureAdToken(config.VEILARBREGISTRERING_SCOPE),
         JSON.stringify({ fnr })
     );
 }

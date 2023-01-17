@@ -4,8 +4,8 @@ import getAzureAdToken from '../auth';
 
 async function reaktiverBruker(fnr: string) {
     return fetchData(
-        `${config.VEILARBREGISTRERING_GCP_URL}/api/fullfoerreaktivering/systembruker`,
-        await getAzureAdToken(config.VEILARBREGISTRERING_GCP_SCOPE),
+        `${config.VEILARBREGISTRERING_URL}/api/fullfoerreaktivering/systembruker`,
+        await getAzureAdToken(config.VEILARBREGISTRERING_SCOPE),
         JSON.stringify({ fnr })
     );
 }
