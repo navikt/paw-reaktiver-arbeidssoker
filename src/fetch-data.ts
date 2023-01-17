@@ -6,6 +6,7 @@ function generateHeaders(token: string) {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
         'nav-call-id': callId,
+        'Nav-Consumer-Id': 'paw-reaktiver-arbeidssoker',
     };
 }
 
