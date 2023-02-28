@@ -52,7 +52,7 @@ style I fill:#61e86f
 Bruk Node.js 18.
 
 Du kan bruke [NVM](https://github.com/nvm-sh/nvm) for å sette versjon.
-F.eks. `nvm install 18.12.1 && nvm use 18.12.1`
+F.eks. `nvm install 18.14.2 && nvm use 18.14.2`
 
 -   klon repo
 -   installer avhengigheter: `npm i`
