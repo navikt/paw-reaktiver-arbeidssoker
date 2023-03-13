@@ -12,7 +12,6 @@ jobs:
         permissions:
           contents: "read"
           id-token: "write"
-        needs: set-vars
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
