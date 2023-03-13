@@ -48,7 +48,7 @@ jobs:
     deploy-prod:
         if: github.ref == 'refs/heads/main'
         name: Deploy til prod
-        needs: [set-vars, deploy-dev]
+        needs: [test-build-and-push, deploy-dev]
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
