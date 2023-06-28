@@ -21,7 +21,7 @@
         "pino": "8.11.0",
         "pino-http": "8.3.3",
         "prom-client": "14.2.0",
-        "unleash-client": "3.19.1"
+        "unleash-client": "3.21.0"
     },
     "devDependencies": {
         "@types/jsonwebtoken": "9.0.1",
