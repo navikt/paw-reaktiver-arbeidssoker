@@ -18,7 +18,7 @@
     "dependencies": {
         "jsonwebtoken": "9.0.0",
         "kafkajs": "2.2.4",
-        "pino": "8.11.0",
+        "pino": "8.14.1",
         "pino-http": "8.3.3",
         "prom-client": "14.2.0",
         "unleash-client": "3.19.1"
