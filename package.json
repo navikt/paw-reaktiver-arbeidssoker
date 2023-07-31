@@ -54,7 +54,7 @@
         "*.{js,jsx,json,md,ts,tsx}": "prettier --write"
     },
     "engines": {
-        "node": ">=18.16.0"
+        "node": ">=18.17.0"
     },
     "author": "",
     "license": "MIT"
