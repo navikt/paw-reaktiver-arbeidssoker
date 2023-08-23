@@ -65,8 +65,12 @@ async function runConsumer() {
 }
 
 (async () => {
-    await unleashInit();
-    setInterval(sjekkHentNesteFraKoToggle, 1000);
-    runConsumer();
-    runHttpServer();
+    try {
+        await unleashInit();
+        setInterval(sjekkHentNesteFraKoToggle, 1000);
+        runConsumer();
+        runHttpServer();
+    } catch (err) {
+        logger.error(err);
+    }
 })();
