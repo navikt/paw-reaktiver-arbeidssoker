@@ -12,8 +12,10 @@ class ByEnvironmentStrategy extends Strategy {
 const unleashInit = () =>
     startUnleash({
         appName: 'paw-reaktiver-arbeidssoker',
-        url: config.UNLEASH_API_URL,
-        environment: config.UNLEASH_ENVIRONMENT,
+        url: config.UNLEASH_SERVER_API_URL,
+        customHeaders: {
+            Authorization: config.UNLEASH_SERVER_API_TOKEN,
+        },
         strategies: [new ByEnvironmentStrategy('byEnvironment')],
     });
 

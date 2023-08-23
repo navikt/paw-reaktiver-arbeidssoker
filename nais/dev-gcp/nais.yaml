@@ -9,7 +9,7 @@ spec:
     azure:
         application:
             enabled: true
-    image: {{ image }}
+    image: { { image } }
     port: 3000
     replicas:
         min: 1
@@ -40,17 +40,21 @@ spec:
           value: https://unleash.nais.io/api/
         - name: UNLEASH_ENVIRONMENT
           value: dev
+        - name: UNLEASH_SERVER_API_URL
+          value: 'https://paw-unleash-api.nav.cloud.nais.io/api'
     resources:
         limits:
-          cpu: 500m
-          memory: 512Mi
+            cpu: 500m
+            memory: 512Mi
         requests:
-          cpu: 200m
-          memory: 256Mi
+            cpu: 200m
+            memory: 256Mi
     kafka:
         pool: nav-dev
     accessPolicy:
         outbound:
+            external:
+                - host: paw-unleash-api.nav.cloud.nais.io
             rules:
                 - application: aia-backend
                 - application: veilarbregistrering
