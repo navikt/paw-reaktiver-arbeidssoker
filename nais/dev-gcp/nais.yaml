@@ -42,6 +42,8 @@ spec:
           value: dev
         - name: UNLEASH_SERVER_API_URL
           value: https://paw-unleash-api.nav.cloud.nais.io/api
+    envFrom:
+        - secret: paw-reaktiver-arbeidssoker-unleash-api-token
     resources:
         limits:
             cpu: 500m
