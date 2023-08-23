@@ -9,7 +9,7 @@ spec:
     azure:
         application:
             enabled: true
-    image: { { image } }
+    image: {{ image }}
     port: 3000
     replicas:
         min: 1
@@ -41,7 +41,7 @@ spec:
         - name: UNLEASH_ENVIRONMENT
           value: prod
         - name: UNLEASH_SERVER_API_URL
-          value: 'https://paw-unleash-api.nav.cloud.nais.io/api'
+          value: https://paw-unleash-api.nav.cloud.nais.io/api
     resources:
         limits:
             cpu: '3'
