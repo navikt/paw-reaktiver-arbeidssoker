@@ -1,20 +1,13 @@
-import { Context, isEnabled, startUnleash, Strategy } from 'unleash-client';
+import { isEnabled, startUnleash } from 'unleash-client';
 import config from './config';
-
-class ByEnvironmentStrategy extends Strategy {
-    isEnabled(parameters: { [key: string]: string }, context: Context): boolean {
-        const environmentList: string[] = parameters['miljø']?.split(',') || [];
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        return environmentList.includes(context.environment!);
-    }
-}
 
 const unleashInit = () =>
     startUnleash({
         appName: 'paw-reaktiver-arbeidssoker',
-        url: config.UNLEASH_API_URL,
-        environment: config.UNLEASH_ENVIRONMENT,
-        strategies: [new ByEnvironmentStrategy('byEnvironment')],
+        url: config.UNLEASH_SERVER_API_URL,
+        customHeaders: {
+            Authorization: config.UNLEASH_SERVER_API_TOKEN,
+        },
     });
 
 enum FeatureToggles {
@@ -23,7 +16,6 @@ enum FeatureToggles {
 
 const toggleIsEnabled = (toggle: FeatureToggles) => {
     if (config.isDev) return true;
-
     return isEnabled(toggle);
 };
 

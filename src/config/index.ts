@@ -15,6 +15,8 @@ export interface IEnvironmentVariables {
     UNLEASH_API_URL: string;
     UNLEASH_ENVIRONMENT: string;
     NODE_ENV: 'production' | 'development';
+    UNLEASH_SERVER_API_URL: string;
+    UNLEASH_SERVER_API_TOKEN: string;
 }
 
 const env = process.env as unknown as IEnvironmentVariables;

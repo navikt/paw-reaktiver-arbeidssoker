@@ -40,6 +40,10 @@ spec:
           value: https://unleash.nais.io/api/
         - name: UNLEASH_ENVIRONMENT
           value: prod
+        - name: UNLEASH_SERVER_API_URL
+          value: https://paw-unleash-api.nav.cloud.nais.io/api
+    envFrom:
+        - secret: paw-reaktiver-arbeidssoker-unleash-api-token
     resources:
         limits:
             cpu: '3'
@@ -51,6 +55,8 @@ spec:
         pool: nav-prod
     accessPolicy:
         outbound:
+            external:
+                - host: paw-unleash-api.nav.cloud.nais.io
             rules:
                 - application: aia-backend
                 - application: veilarbregistrering
