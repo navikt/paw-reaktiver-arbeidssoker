@@ -1,15 +1,5 @@
 import { isEnabled, startUnleash } from 'unleash-client';
 import config from './config';
-import logger from './logger';
-
-//
-// class ByEnvironmentStrategy extends Strategy {
-//     isEnabled(parameters: { [key: string]: string }, context: Context): boolean {
-//         const environmentList: string[] = parameters['miljø']?.split(',') || [];
-//         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-//         return environmentList.includes(context.environment!);
-//     }
-// }
 
 const unleashInit = () =>
     startUnleash({
@@ -18,7 +8,6 @@ const unleashInit = () =>
         customHeaders: {
             Authorization: config.UNLEASH_SERVER_API_TOKEN,
         },
-        //strategies: [new ByEnvironmentStrategy('byEnvironment')],
     });
 
 enum FeatureToggles {
@@ -27,7 +16,6 @@ enum FeatureToggles {
 
 const toggleIsEnabled = (toggle: FeatureToggles) => {
     if (config.isDev) return true;
-    logger.info(`isEnabled: ${toggle}`);
     return isEnabled(toggle);
 };
 
