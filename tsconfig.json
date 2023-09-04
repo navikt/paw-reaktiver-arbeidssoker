@@ -7,7 +7,6 @@
         "lib": ["es7"],
         "sourceMap": true,
         "allowJs": true,
-        "moduleResolution": "node",
         "forceConsistentCasingInFileNames": true,
         "noImplicitReturns": true,
         "noImplicitThis": true,
