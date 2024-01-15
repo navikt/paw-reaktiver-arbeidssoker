@@ -1,6 +1,3 @@
-import { describe, it } from 'node:test';
-import assert from 'node:assert/strict';
-
 import skalMeldingBehandles from './skal-melding-behandles';
 import plussDager from './plussdager';
 
@@ -20,7 +17,7 @@ describe('tester skalMeldingBehandles', () => {
         const resultat = skalMeldingBehandles(melding);
         const forventetResultat = false;
 
-        assert.equal(resultat, forventetResultat);
+        expect(resultat).toEqual(forventetResultat);
     });
 
     it('returnerer FALSE dersom det er svart JA til smp 5 og periodeTil pluss 14 dager er i FORTIDEN', () => {
@@ -36,7 +33,7 @@ describe('tester skalMeldingBehandles', () => {
         const resultat = skalMeldingBehandles(melding);
         const forventetResultat = false;
 
-        assert.equal(resultat, forventetResultat);
+        expect(resultat).toEqual(forventetResultat);
     });
 
     it('returnerer TRUE dersom det er svart JA til spm 5 og periodeTil pluss 14 dager er i FREMTIDEN', () => {
@@ -55,6 +52,6 @@ describe('tester skalMeldingBehandles', () => {
         const resultat = skalMeldingBehandles(melding);
         const forventetResultat = true;
 
-        assert.equal(resultat, forventetResultat);
+        expect(resultat).toEqual(forventetResultat);
     });
 });

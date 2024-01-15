@@ -21,6 +21,6 @@
         "isolatedModules": true,
         "noFallthroughCasesInSwitch": true
     },
-    "exclude": ["node_modules", "src/test/**/*", "src/**/*.test.*", "build"],
-    "include": ["src", "types", "src/lib/skal-melding-behandles.test.js"]
+    "exclude": ["node_modules", "src/test/**/*", "build"],
+    "include": ["src", "types"]
 }
