@@ -21,7 +21,7 @@
         "pino": "8.17.2",
         "pino-http": "9.0.0",
         "prom-client": "14.2.0",
-        "unleash-client": "4.1.1"
+        "unleash-client": "5.3.1"
     },
     "devDependencies": {
         "@types/jest": "29.5.11",
