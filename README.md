@@ -52,7 +52,7 @@ style I fill:#61e86f
 Bruk Node.js 20.
 
 Du kan bruke [NVM](https://github.com/nvm-sh/nvm) for å sette versjon.
-F.eks. `nvm install 20.11.1 && nvm use 20.11.1` eller bare `nvm use`
+F.eks. `nvm install 20.13.0 && nvm use 20.13.0` eller bare `nvm use`
 
 -   klon repo
 -   installer avhengigheter: `npm i`
